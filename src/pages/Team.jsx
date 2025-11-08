@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { members20, witteam20 } from '../data/team_2020';
 import { members21, witteam21 } from '../data/team_2021';
 import { members22, witteam22 } from '../data/team_2022';
+import { members23, witteam23 } from '../data/team_2023';
 import { members24, witteam24 } from '../data/team_2024';
 import { members25, witteam25 } from '../data/team_2025';
 import './Team.css';
@@ -91,6 +92,7 @@ function renderMembers(list) {
 const teamYears = [
   { key: 'execom_25', label: 'Execom 2025-2026', members: members25, wit: witteam25 },
   { key: 'execom_24', label: 'Execom 2024-2025', members: members24, wit: witteam24 },
+  { key: 'execom_23', label: 'Execom 2023-2024', members: members23, wit: witteam23 },
   { key: 'execom_22', label: 'Execom 2022-2023', members: members22, wit: witteam22 },
   { key: 'execom_21', label: 'Execom 2021-2022', members: members21, wit: witteam21 },
   { key: 'execom_20', label: 'Execom 2020-2021', members: members20, wit: witteam20 },
