@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Prism from '../../Reactbits/Prism/Prism';
-import PixelCard from '../../Reactbits/PixelCard/PixelCard';
+import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import PlugSection from '../components/PlugSection';
 import './Home.css';
 
@@ -70,15 +70,13 @@ function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <PixelCard
+              <SpotlightCard
                 className="stat-card"
-                gap={4}
-                speed={0.5}
-                colors="#8b5cf6,#6366f1,#a78bfa"
+                spotlightColor="rgba(139, 92, 246, 0.3)"
               >
                 <div className="stat-card__number">15+</div>
                 <div className="stat-card__label">Years of Excellence</div>
-              </PixelCard>
+              </SpotlightCard>
             </motion.div>
 
             <motion.div
@@ -87,15 +85,13 @@ function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <PixelCard
+              <SpotlightCard
                 className="stat-card"
-                gap={4}
-                speed={0.5}
-                colors="#8b5cf6,#6366f1,#a78bfa"
+                spotlightColor="rgba(99, 102, 241, 0.3)"
               >
                 <div className="stat-card__number">100+</div>
                 <div className="stat-card__label">Events Conducted</div>
-              </PixelCard>
+              </SpotlightCard>
             </motion.div>
 
             <motion.div
@@ -104,15 +100,13 @@ function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <PixelCard
+              <SpotlightCard
                 className="stat-card"
-                gap={4}
-                speed={0.5}
-                colors="#8b5cf6,#6366f1,#a78bfa"
+                spotlightColor="rgba(167, 139, 250, 0.3)"
               >
                 <div className="stat-card__number">500+</div>
                 <div className="stat-card__label">Active Members</div>
-              </PixelCard>
+              </SpotlightCard>
             </motion.div>
 
             <motion.div
@@ -121,15 +115,13 @@ function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <PixelCard
+              <SpotlightCard
                 className="stat-card"
-                gap={4}
-                speed={0.5}
-                colors="#8b5cf6,#6366f1,#a78bfa"
+                spotlightColor="rgba(139, 92, 246, 0.3)"
               >
                 <div className="stat-card__number">#1</div>
                 <div className="stat-card__label">First in Kerala</div>
-              </PixelCard>
+              </SpotlightCard>
             </motion.div>
           </div>
         </div>
