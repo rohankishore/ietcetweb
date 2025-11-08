@@ -1,0 +1,7 @@
+.App{
+  font-family: 'europa' ,Arial, Helvetica, sans-serif;
+}
+@font-face{
+  font-family: 'europa';
+  src: url(./assets/font/Europa\ Regular.ttf)
+}

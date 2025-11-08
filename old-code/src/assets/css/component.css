@@ -1,0 +1,110 @@
+/*-------------------
+    General Page 
+ -------------------*/
+#page-container{
+    min-height: 100vh;
+    max-width: 100vw !important;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+#page-container::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(to right, rgba(94, 129, 255, 0.08) 0px, rgba(94, 129, 255, 0.08) 1px, transparent 1px, transparent 90px),
+        repeating-linear-gradient(to bottom, rgba(124, 58, 237, 0.08) 0px, rgba(124, 58, 237, 0.08) 1px, transparent 1px, transparent 90px);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.38;
+    transform: translate3d(
+        calc(var(--grid-magnet-x, 0) * 22px),
+        calc(var(--grid-magnet-y, 0) * 22px + var(--grid-scroll-y, 0px)),
+        0
+    );
+    transition: transform 0.55s cubic-bezier(0.18, 0.68, 0.32, 1);
+    will-change: transform;
+}
+
+pre{
+    font-family: 'Inter', 'europa', Arial, Helvetica, sans-serif !important;
+    font-size: 16px !important;
+    white-space: pre-wrap;
+}
+
+#page-content{
+    padding-bottom: 200px;
+}
+
+.row-header{
+    text-align: center;
+}
+
+.row-header p{
+    font-size: 35pt;
+}
+
+
+/*-------------------
+    Footer Section
+-------------------*/
+.navlink{
+    text-decoration: inherit !important;
+}
+
+.navlink--active {
+    position: relative;
+    color: #ffffff !important;
+    text-shadow: 0 0 16px rgba(161, 181, 255, 0.65), 0 0 28px rgba(124, 58, 237, 0.45);
+}
+
+.navlink--active::after {
+    content: '';
+    position: absolute;
+    inset: -0.35rem -0.9rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 50%, rgba(161, 181, 255, 0.28), rgba(76, 29, 149, 0));
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(0.5px);
+}
+
+.down{
+    color: var(--accent-primary, #a855f7);
+    transition: all 0.3s ease;
+}
+
+.down:hover{
+    color: var(--accent-secondary, #c084fc);
+}
+
+#footer{
+    border-top: 0px !important;
+}
+
+#footnote{
+    height: 25pt;
+}
+
+.centered-tabs{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    outline: none !important;
+    border: none !important;
+}
+
+/* Navbar specific overrides */
+.navbar-toggler {
+    border: none !important;
+    background: var(--glass-bg, rgba(168, 85, 247, 0.08)) !important;
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}

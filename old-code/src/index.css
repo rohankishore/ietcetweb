@@ -1,0 +1,24 @@
+
+
+:root {
+  --page-bg-gradient: linear-gradient(180deg, rgba(18, 15, 32, 0.96), rgba(9, 7, 18, 0.98));
+  --page-bg-solid: #0f0d21;
+  --grid-scroll-y: 0px;
+  --surge-velocity: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--page-bg-gradient);
+  background-color: var(--page-bg-solid);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

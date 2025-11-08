@@ -1,0 +1,256 @@
+.events-page {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.events-hero {
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+}
+
+.events-hero__content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.events-hero__subtitle {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 700px;
+  margin: 1.5rem auto 0;
+}
+
+.events-content {
+  padding: 4rem 2rem;
+}
+
+.event-year-filter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.event-year-chip {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.event-year-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #fff;
+}
+
+.event-year-chip--active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: transparent;
+  color: #fff;
+}
+
+.events-stack {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.event-section {
+  margin-bottom: 6rem;
+}
+
+.event-section__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.event-section__title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 2px;
+}
+
+.event-section__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.event-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(139, 92, 246, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+}
+
+.event-card__image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.event-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover .event-card__image img {
+  transform: scale(1.05);
+}
+
+.event-card__content {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.event-card__type {
+  display: inline-block;
+  padding: 0.375rem 0.875rem;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  border-radius: 50px;
+  color: #a78bfa;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.event-card__date {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.event-card__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.event-card__quote {
+  font-size: 1rem;
+  color: #a78bfa;
+  font-style: italic;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.event-card__description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.event-card__link {
+  color: #8b5cf6;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.event-card__link:hover {
+  color: #a78bfa;
+  gap: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+  .event-section__grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .events-hero {
+    padding: 4rem 1rem 3rem;
+  }
+
+  .events-content {
+    padding: 3rem 1rem;
+  }
+
+  .event-year-filter {
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .event-year-chip {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .event-section {
+    margin-bottom: 4rem;
+  }
+
+  .event-section__title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .event-section__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .event-card__content {
+    padding: 1.5rem;
+  }
+
+  .event-card__title {
+    font-size: 1.25rem;
+  }
+}
