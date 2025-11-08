@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import LaserFlow from '../../Reactbits/LaserFlow/LaserFlow';
 import ElectricBorder from '../../Reactbits/ElectricBorder/ElectricBorder';
 import './PlugSection.css';
 
@@ -108,18 +107,6 @@ function PlugSection({ onPlugChange }) {
   return (
     <>
       <section className={`plug-section ${isPlugged ? 'plug-section--active' : ''} ${surgeActive ? 'plug-section--surge' : ''}`}>
-        {isPlugged && (
-          <div className="plug-section__laserflow">
-            <LaserFlow 
-              wispDensity={2.5}
-              flowSpeed={1.2}
-              fogIntensity={0.9}
-              color="#6366f1"
-              fade={0.5}
-              flowStrength={3.5}
-            />
-          </div>
-        )}
         <div className="container">
           <div className="plug-section__header">
             <span className="section-badge">Power Up</span>
@@ -132,27 +119,35 @@ function PlugSection({ onPlugChange }) {
           
           <div className="plug-section__interaction">
             <div className={`plug-scene ${isPlugged ? 'plug-scene--active' : ''}`}>
-              <div className="plug-track" ref={trackRef}>
-                <div
-                  className="plug-cable"
-                  style={{ width: `${Math.max(dragOffset + BASE_OFFSET + 32, BASE_OFFSET + 32)}px` }}
-                />
-                <button
-                  type="button"
-                  className="plug"
-                  ref={plugRef}
-                  onPointerDown={handlePointerDown}
-                  aria-label={isPlugged ? 'Power connected. Press to unplug.' : 'Drag to connect power.'}
-                  aria-pressed={isPlugged}
-                  style={{ transform: `translate(${dragOffset}px, -50%)` }}
-                >
-                  <span className="plug__head" aria-hidden="true"></span>
-                  <span className="plug__cap" aria-hidden="true"></span>
-                </button>
-                <div className="plug-outlet" aria-hidden="true">
-                  <span className="plug-outlet__face"></span>
+              <ElectricBorder
+                color={isPlugged ? "#22c55e" : "#6366f1"}
+                speed={isPlugged ? 2 : 1}
+                chaos={isPlugged ? 1.5 : 1}
+                thickness={3}
+                className="plug-track-border"
+              >
+                <div className="plug-track" ref={trackRef}>
+                  <div
+                    className="plug-cable"
+                    style={{ width: `${Math.max(dragOffset + BASE_OFFSET + 32, BASE_OFFSET + 32)}px` }}
+                  />
+                  <button
+                    type="button"
+                    className="plug"
+                    ref={plugRef}
+                    onPointerDown={handlePointerDown}
+                    aria-label={isPlugged ? 'Power connected. Press to unplug.' : 'Drag to connect power.'}
+                    aria-pressed={isPlugged}
+                    style={{ transform: `translate(${dragOffset}px, -50%)` }}
+                  >
+                    <span className="plug__head" aria-hidden="true"></span>
+                    <span className="plug__cap" aria-hidden="true"></span>
+                  </button>
+                  <div className="plug-outlet" aria-hidden="true">
+                    <span className="plug-outlet__face"></span>
+                  </div>
                 </div>
-              </div>
+              </ElectricBorder>
             </div>
             
             {isPlugged ? (

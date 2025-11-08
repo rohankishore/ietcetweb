@@ -79,6 +79,10 @@
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
 }
 
+.plug-track-border {
+  display: block;
+}
+
 .plug {
   position: absolute;
   top: 50%;
