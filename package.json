@@ -16,7 +16,8 @@
     "ogl": "^1.0.11",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.5",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.30.1",
     "three": "^0.167.1"
   },
   "devDependencies": {

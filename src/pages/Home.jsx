@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Prism from '../../Reactbits/Prism/Prism';
+import PixelCard from '../../Reactbits/PixelCard/PixelCard';
 import PlugSection from '../components/PlugSection';
 import './Home.css';
 
@@ -68,10 +69,16 @@ function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="stat-card"
             >
-              <div className="stat-card__number">15+</div>
-              <div className="stat-card__label">Years of Excellence</div>
+              <PixelCard
+                className="stat-card"
+                gap={4}
+                speed={0.5}
+                colors="#8b5cf6,#6366f1,#a78bfa"
+              >
+                <div className="stat-card__number">15+</div>
+                <div className="stat-card__label">Years of Excellence</div>
+              </PixelCard>
             </motion.div>
 
             <motion.div
@@ -79,10 +86,16 @@ function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="stat-card"
             >
-              <div className="stat-card__number">100+</div>
-              <div className="stat-card__label">Events Conducted</div>
+              <PixelCard
+                className="stat-card"
+                gap={4}
+                speed={0.5}
+                colors="#8b5cf6,#6366f1,#a78bfa"
+              >
+                <div className="stat-card__number">100+</div>
+                <div className="stat-card__label">Events Conducted</div>
+              </PixelCard>
             </motion.div>
 
             <motion.div
@@ -90,10 +103,16 @@ function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="stat-card"
             >
-              <div className="stat-card__number">500+</div>
-              <div className="stat-card__label">Active Members</div>
+              <PixelCard
+                className="stat-card"
+                gap={4}
+                speed={0.5}
+                colors="#8b5cf6,#6366f1,#a78bfa"
+              >
+                <div className="stat-card__number">500+</div>
+                <div className="stat-card__label">Active Members</div>
+              </PixelCard>
             </motion.div>
 
             <motion.div
@@ -101,10 +120,16 @@ function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="stat-card"
             >
-              <div className="stat-card__number">#1</div>
-              <div className="stat-card__label">First in Kerala</div>
+              <PixelCard
+                className="stat-card"
+                gap={4}
+                speed={0.5}
+                colors="#8b5cf6,#6366f1,#a78bfa"
+              >
+                <div className="stat-card__number">#1</div>
+                <div className="stat-card__label">First in Kerala</div>
+              </PixelCard>
             </motion.div>
           </div>
         </div>
