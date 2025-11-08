@@ -25,7 +25,7 @@ function Home() {
           >
             <span className="hero__badge">IET On Campus CET</span>
             <h1 className="hero__title">
-              Welcome to IET CET
+              Welcome to IET On Campus CET
             </h1>
             <p className="hero__subtitle">
               College of Engineering, Trivandrum hosts an active student chapter of 

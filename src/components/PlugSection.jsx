@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import LaserFlow from '../../Reactbits/LaserFlow/LaserFlow';
+import ElectricBorder from '../../Reactbits/ElectricBorder/ElectricBorder';
 import './PlugSection.css';
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
