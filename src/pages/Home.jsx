@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Prism from '../../Reactbits/Prism/Prism';
+import Aurora from '../../Reactbits/Aurora/Aurora';
+import PrismaticBurst from '../../Reactbits/PrismaticBurst/PrismaticBurst';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import PlugSection from '../components/PlugSection';
 import './Home.css';
@@ -12,7 +14,7 @@ function Home() {
     <div className="home">
       <section className="hero">
         <div className="prism-background">
-          <Prism 
+          <PrismaticBurst 
           />
         </div>
         
