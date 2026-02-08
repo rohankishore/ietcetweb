@@ -115,7 +115,7 @@ export const members25 = [
     img: "EXECOM_25-26/DevikaSajeesh_WebLead.jpg",
   },
   {
-    position: "Webmaster",
+    position: "Web Lead",
     name: "Rohit Joe Mendus",
     img: "EXECOM_25-26/Rohit Joe Mendus - Web Master.jpg",
   },
