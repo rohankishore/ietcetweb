@@ -7,6 +7,17 @@ import './DroneHero.css';
 // Kick off GLTF fetch as early as possible
 useGLTF.preload('/models/drone.glb');
 
+// Helper: maps progress p to an opacity value that fades in [i0→i1] and out [o0→o1].
+// Pass o0=null to skip the fade-out (stays visible).
+function fade(p, i0, i1, o0, o1) {
+  if (p < i0) return 0;
+  if (p < i1) return (p - i0) / (i1 - i0);
+  if (o0 === null) return 1;
+  if (p < o0) return 1;
+  if (p < o1) return 1 - (p - o0) / (o1 - o0);
+  return 0;
+}
+
 // ─── Drone mesh ──────────────────────────────────────────────────────────────
 
 function DroneModel() {
@@ -51,8 +62,8 @@ function CameraRig({ scrollProgressRef }) {
   useFrame((state, delta) => {
     const p = scrollProgressRef.current;
 
-    // Z: 1.5 (very close, drone fills/overflows frame) → 5.5 (full overview)
-    const targetZ = 1.5 + p * 4;
+    // Z: 0.5 (ultra-close macro shot) → 5.5 (full overview)
+    const targetZ = 0.5 + p * 5;
     // Y: slight downward tilt at start that levels off as we pull back
     const targetY = 0.28 * (1 - p);
 
@@ -68,9 +79,12 @@ function CameraRig({ scrollProgressRef }) {
 // ─── Hero section ────────────────────────────────────────────────────────────
 
 function DroneHero() {
-  const sectionRef       = useRef(null);
-  const textRef          = useRef(null);
-  const scrollHintRef    = useRef(null);
+  const sectionRef        = useRef(null);
+  const phrase1Ref        = useRef(null);
+  const phrase2Ref        = useRef(null);
+  const phrase3Ref        = useRef(null);
+  const textRef           = useRef(null);
+  const scrollHintRef     = useRef(null);
   const scrollProgressRef = useRef(0);
 
   useEffect(() => {
@@ -86,9 +100,30 @@ function DroneHero() {
 
       scrollProgressRef.current = progress;
 
-      // Fade + rise the title text in once progress > 70 %
+      // ── Phrase 1: "Machines take flight."  0 % → 35 %
+      if (phrase1Ref.current) {
+        const o = fade(progress, 0.01, 0.10, 0.25, 0.35);
+        phrase1Ref.current.style.opacity = o;
+        phrase1Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
+      }
+
+      // ── Phrase 2: "Engineering meets ambition."  33 % → 67 %
+      if (phrase2Ref.current) {
+        const o = fade(progress, 0.33, 0.44, 0.57, 0.67);
+        phrase2Ref.current.style.opacity = o;
+        phrase2Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
+      }
+
+      // ── Phrase 3: "This is IET On-Campus CET."  67 % → 97 %
+      if (phrase3Ref.current) {
+        const o = fade(progress, 0.67, 0.78, 0.89, 0.97);
+        phrase3Ref.current.style.opacity = o;
+        phrase3Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
+      }
+
+      // ── Final CTA block: fades in from 75 %
       if (textRef.current) {
-        const t = Math.max(0, Math.min(1, (progress - 0.70) / 0.25));
+        const t = Math.max(0, Math.min(1, (progress - 0.75) / 0.20));
         textRef.current.style.opacity = t;
         textRef.current.style.transform = `translateY(${(1 - t) * 24}px)`;
       }
@@ -113,15 +148,28 @@ function DroneHero() {
     <div ref={sectionRef} className="drone-hero">
       <div className="drone-hero__sticky">
 
-        {/* ── Three.js canvas ─────────────────────────────────────── */}
+        {/* ── Phrases — rendered at z:1, below the canvas at z:2.          */}
+        {/* Transparent canvas pixels let them show through; drone geometry  */}
+        {/* paints over them, giving a true "behind the drone" layering.     */}
+        <div ref={phrase1Ref} className="drone-hero__phrase" style={{ opacity: 0 }}>
+          Machines take flight.
+        </div>
+        <div ref={phrase2Ref} className="drone-hero__phrase" style={{ opacity: 0 }}>
+          Engineering meets ambition.
+        </div>
+        <div ref={phrase3Ref} className="drone-hero__phrase drone-hero__phrase--accent" style={{ opacity: 0 }}>
+          This is IET On-Campus CET.
+        </div>
+
+        {/* ── Three.js canvas — z:2 with alpha:true so phrases show through  */}
+        <div className="drone-hero__canvas-wrapper">
         <Canvas
-          camera={{ position: [0, 0.28, 1.5], fov: 60, near: 0.1, far: 100 }}
-          gl={{ antialias: true, powerPreference: 'high-performance' }}
+          camera={{ position: [0, 0.28, 0.5], fov: 60, near: 0.1, far: 100 }}
+          gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
           dpr={[1, 2]}
           aria-hidden="true"
         >
-          {/* Deep-space background matching the site palette */}
-          <color attach="background" args={['#090614']} />
+          {/* No <color> attachment — keep background transparent */}
 
           {/* Ambient fill */}
           <ambientLight intensity={0.35} />
@@ -144,8 +192,9 @@ function DroneHero() {
 
           <CameraRig scrollProgressRef={scrollProgressRef} />
         </Canvas>
+        </div>{/* end .drone-hero__canvas-wrapper */}
 
-        {/* ── Text overlay — appears after 70 % scroll ────────────── */}
+        {/* ── Text overlay — appears after 75 % scroll ────────────── */}
         <div
           ref={textRef}
           className="drone-hero__text"
