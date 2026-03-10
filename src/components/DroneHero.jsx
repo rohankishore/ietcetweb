@@ -43,9 +43,9 @@ function DroneModel({ scrollProgressRef }) {
     const spinSpeed = 1.4 - ep * 1.15;
     innerRef.current.rotation.y += delta * spinSpeed;
 
-    innerRef.current.position.y = Math.sin(t * 0.72) * 0.06;
-    innerRef.current.rotation.z = Math.sin(t * 0.51) * 0.025;
-    innerRef.current.rotation.x = Math.sin(t * 0.38) * 0.018;
+    innerRef.current.position.y = Math.sin(t * 0.72) * 0.018;
+    innerRef.current.rotation.z = Math.sin(t * 0.51) * 0.008;
+    innerRef.current.rotation.x = Math.sin(t * 0.38) * 0.006;
   });
 
   return (
@@ -201,7 +201,7 @@ function DroneHero() {
         </div>
 
         <div ref={scrollHintRef} className="drone-hero__scroll-hint">
-          <span className="drone-hero__scroll-text">Scroll to reveal</span>
+          <span className="drone-hero__scroll-text"></span>
           <div className="drone-hero__scroll-chevrons">
             <div className="drone-hero__chevron" />
             <div className="drone-hero__chevron" />
