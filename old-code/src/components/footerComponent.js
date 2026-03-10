@@ -32,7 +32,7 @@ function Footer(){
                 <p>College of Engineering, Trivandrum</p>
             </div>
             <div className="d-flex justify-content-center" id="footnote">
-                <p>Revamped by Rohan Kishore & Rohit Joe Mendus </p>
+                <p>Revamped by <a href="https://www.github.com/rohankishore" target="_blank" rel="noopener noreferrer">Rohan Kishore</a> </p>
             </div>
             <div className="d-flex justify-content-center" id="footnote">
                 <p>Developed by Sheen Xavier A</p>

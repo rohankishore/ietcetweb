@@ -44,8 +44,7 @@ function Footer() {
         </div>
 
         <div className="footer__credits">
-          <p>Revamped by Rohan Kishore & Rohit Joe Mendus</p>
-          <p>Developed by Sheen Xavier A</p>
+                <p>Developed by <a href="https://www.github.com/rohankishore" target="_blank" rel="noopener noreferrer">Rohan Kishore</a> </p>
         </div>
 
         <div className="footer__copyright">
