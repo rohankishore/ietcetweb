@@ -2,6 +2,14 @@
    DroneHero — scroll-driven 3-D drone reveal
    =================================================================== */
 
+@font-face {
+  font-family: 'Thomeo';
+  src: url('/fonts/Thomeo .ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
 /* ── Scroll runway ────────────────────────────────────────────────── */
 
 .drone-hero {
@@ -50,6 +58,7 @@
   justify-content: center;
   text-align: center;
   padding: 0 4vw;
+  font-family: 'Thomeo', sans-serif;
   font-size: clamp(2.25rem, 7.5vw, 7rem);
   font-weight: 900;
   line-height: 1.08;
