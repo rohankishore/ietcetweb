@@ -1,0 +1,151 @@
+/* ===================================================================
+   DroneHero — scroll-driven 3-D drone reveal
+   =================================================================== */
+
+/* ── Scroll runway ────────────────────────────────────────────────── */
+
+.drone-hero {
+  position: relative;
+  /* 300 vh = 100 vh visible + 200 vh of scroll travel for the animation */
+  height: 300vh;
+  z-index: 0;
+}
+
+/* ── Sticky viewport ──────────────────────────────────────────────── */
+
+.drone-hero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ── Canvas ───────────────────────────────────────────────────────── */
+
+/* R3F renders a <canvas> directly inside the container div it creates.
+   Force it to fill the sticky container absolutely. */
+.drone-hero__sticky canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ── Text overlay ─────────────────────────────────────────────────── */
+
+.drone-hero__text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  /* opacity + transform driven by JS scroll handler — no CSS transition */
+  pointer-events: none;
+  z-index: 10;
+  will-change: opacity, transform;
+}
+
+.drone-hero__badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  border-radius: 50px;
+  color: #a78bfa;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+.drone-hero__title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.drone-hero__subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 2.5rem;
+  letter-spacing: 1px;
+}
+
+.drone-hero__cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  pointer-events: auto;
+}
+
+/* ── Scroll hint ──────────────────────────────────────────────────── */
+
+.drone-hero__scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+  will-change: opacity;
+  pointer-events: none;
+}
+
+.drone-hero__scroll-text {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.drone-hero__scroll-chevrons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  animation: drone-bounce 1.8s ease-in-out infinite;
+}
+
+.drone-hero__chevron {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid rgba(167, 139, 250, 0.65);
+  border-bottom: 2px solid rgba(167, 139, 250, 0.65);
+  transform: rotate(45deg);
+}
+
+@keyframes drone-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .drone-hero__title {
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+  }
+
+  .drone-hero__subtitle {
+    font-size: 0.9375rem;
+  }
+}

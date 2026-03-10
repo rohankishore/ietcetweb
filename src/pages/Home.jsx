@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Prism from '../../Reactbits/Prism/Prism';
-import Aurora from '../../Reactbits/Aurora/Aurora';
-import PrismaticBurst from '../../Reactbits/PrismaticBurst/PrismaticBurst';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import PlugSection from '../components/PlugSection';
+import DroneHero from '../components/DroneHero';
 import './Home.css';
 
 function Home() {
@@ -12,35 +10,7 @@ function Home() {
 
   return (
     <div className="home">
-      <section className="hero">
-        <div className="prism-background">
-          <PrismaticBurst 
-          />
-        </div>
-        
-        <div className="hero__container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="hero__content"
-          >
-            <span className="hero__badge">IET On Campus CET</span>
-            <h1 className="hero__title">
-              Welcome to IET On Campus CET
-            </h1>
-            <p className="hero__subtitle">
-              College of Engineering, Trivandrum hosts an active student chapter of 
-              The Institution of Engineering & Technology (IET). We inspire, inform, 
-              and influence the engineering ecosystem through innovation and collaboration.
-            </p>
-            <div className="hero__cta">
-              <a href="#about" className="btn btn--primary">Learn More</a>
-              <a href="/events" className="btn btn--secondary">Explore Events</a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <DroneHero />
 
       <PlugSection onPlugChange={setIsPlugged} />
 
