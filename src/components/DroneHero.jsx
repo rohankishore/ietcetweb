@@ -106,18 +106,11 @@ function DroneHero() {
         phrase2Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
       }
 
-      // ── Phrase 3: fades in 75–85 %, stays until 92 %, fades out 92–98 %
+      // ── Phrase 3: fades in 75–85 %, stays permanently after that
       if (phrase3Ref.current) {
-        const o = fade(progress, 0.75, 0.85, 0.92, 0.98);
+        const o = fade(progress, 0.75, 0.87, null, null);
         phrase3Ref.current.style.opacity = o;
         phrase3Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
-      }
-
-      // ── Final CTA block: fades in from 88 %
-      if (textRef.current) {
-        const t = Math.max(0, Math.min(1, (progress - 0.88) / 0.10));
-        textRef.current.style.opacity = t;
-        textRef.current.style.transform = `translateY(${(1 - t) * 24}px)`;
       }
 
       // ── Drone canvas: fade out 93–100 %
@@ -168,7 +161,7 @@ function DroneHero() {
         <div ref={phrase2Ref} className="drone-hero__phrase" style={{ opacity: 0 }}>
           Engineering meets ambition.
         </div>
-        <div ref={phrase3Ref} className="drone-hero__phrase drone-hero__phrase--accent" style={{ opacity: 0 }}>
+        <div ref={phrase3Ref} className="drone-hero__phrase drone-hero__phrase--final" style={{ opacity: 0 }}>
           This is IET On-Campus CET.
         </div>
 
@@ -204,25 +197,6 @@ function DroneHero() {
           <CameraRig scrollProgressRef={scrollProgressRef} />
         </Canvas>
         </div>{/* end .drone-hero__canvas-wrapper */}
-
-        {/* ── Text overlay — appears after 75 % scroll ────────────── */}
-        <div
-          ref={textRef}
-          className="drone-hero__text"
-          style={{ opacity: 0 }}
-        >
-          <span className="drone-hero__badge">IET On-Campus CET</span>
-          <h1 className="drone-hero__title">
-            Institution of Engineering<br />& Technology
-          </h1>
-          <p className="drone-hero__subtitle">
-            College of Engineering Trivandrum
-          </p>
-          <div className="drone-hero__cta">
-            <a href="#about" className="btn btn--primary">Learn More</a>
-            <a href="/events" className="btn btn--secondary">Explore Events</a>
-          </div>
-        </div>
 
         {/* ── Scroll hint — fades out as user starts scrolling ───── */}
         <div ref={scrollHintRef} className="drone-hero__scroll-hint">

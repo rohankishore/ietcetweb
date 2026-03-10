@@ -66,13 +66,17 @@
   will-change: opacity, transform;
 }
 
-/* Final phrase — stronger purple tint to signal the climax */
-.drone-hero__phrase--accent {
-  color: rgba(167, 139, 250, 0.42);
-  text-shadow:
-    0 0 60px rgba(139, 92, 246, 0.55),
-    0 0 140px rgba(99, 102, 241, 0.35),
-    0 0 200px rgba(167, 139, 250, 0.2);
+/* Final phrase — sits above the canvas (z:3) so it reads as a headline once
+   the drone fades. Full-brightness gradient text, no dimming. */
+.drone-hero__phrase--final {
+  z-index: 3;
+  color: transparent;
+  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 55%, #6366f1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.6));
 }
 
 /* ── Canvas (old rule — kept for safety) ──────────────────────────── */
