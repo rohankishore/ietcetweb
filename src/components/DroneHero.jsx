@@ -16,9 +16,10 @@ function fade(p, i0, i1, o0, o1) {
 }
 
 
-function DroneModel() {
+function DroneModel({ scrollProgressRef }) {
   const { scene } = useGLTF('/models/drone.glb');
   const groupRef = useRef();
+  const clockRef = useRef(0);
 
   const normalizedScale = useMemo(() => {
     const box = new THREE.Box3().setFromObject(scene);
@@ -28,9 +29,21 @@ function DroneModel() {
   }, [scene]);
 
   useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.25;
-    }
+    if (!groupRef.current) return;
+    clockRef.current += delta;
+    const t = clockRef.current;
+    const p = scrollProgressRef.current;
+
+    // Spin: 1.2 rad/s when up close → 0.18 rad/s when fully zoomed out
+    const spinSpeed = 1.2 - p * 1.02;
+    groupRef.current.rotation.y += delta * spinSpeed;
+
+    // Gentle float — subtle Y oscillation so it feels alive
+    groupRef.current.position.y = Math.sin(t * 0.75) * 0.055;
+    // Slight roll rocking — very subtle
+    groupRef.current.rotation.z = Math.sin(t * 0.55) * 0.028;
+    // Slight pitch nod
+    groupRef.current.rotation.x = Math.sin(t * 0.42) * 0.022;
   });
 
   return (
@@ -53,12 +66,16 @@ function CameraRig({ scrollProgressRef }) {
   useFrame((state, delta) => {
     const p = scrollProgressRef.current;
 
-    // Z: 0.8 (close macro shot) → 3.0 (comfortable full-drone view)
-    const targetZ = 0.8 + p * 2.2;
-    // Y: slight downward tilt at start that levels off as we pull back
-    const targetY = 0.28 * (1 - p);
+    // EaseOutCubic — camera rushes in at first, then settles smoothly
+    const ep = 1 - Math.pow(1 - p, 3);
 
-    const lerpFactor = Math.min(delta * 5, 1);
+    // Z: 0.8 (macro) → 3.0 (full view)
+    const targetZ = 0.8 + ep * 2.2;
+    // Y: slight downward tilt at start, levels off as we pull back
+    const targetY = 0.28 * (1 - ep);
+
+    // Gentle lerp — camera glides, never snaps
+    const lerpFactor = Math.min(delta * 3.5, 1);
     state.camera.position.z += (targetZ - state.camera.position.z) * lerpFactor;
     state.camera.position.y += (targetY - state.camera.position.y) * lerpFactor;
     state.camera.lookAt(0, 0, 0);
@@ -74,7 +91,6 @@ function DroneHero() {
   const phrase1Ref          = useRef(null);
   const phrase2Ref          = useRef(null);
   const phrase3Ref          = useRef(null);
-  const textRef             = useRef(null);
   const scrollHintRef       = useRef(null);
   const canvasWrapperRef    = useRef(null);
   const scrollProgressRef   = useRef(0);
@@ -106,11 +122,13 @@ function DroneHero() {
         phrase2Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
       }
 
-      // ── Phrase 3: fades in 75–85 %, stays permanently after that
+      // ── Phrase 3: fades in 75–87 %, then stays — lock to exact centre
       if (phrase3Ref.current) {
         const o = fade(progress, 0.75, 0.87, null, null);
         phrase3Ref.current.style.opacity = o;
-        phrase3Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
+        // Only apply lift-in while still animating; clamp to zero once full
+        const lift = o < 1 ? (1 - Math.min(o * 3, 1)) * 32 : 0;
+        phrase3Ref.current.style.transform = lift === 0 ? 'none' : `translateY(${lift}px)`;
       }
 
       // ── Drone canvas: fade out 93–100 %
@@ -189,7 +207,7 @@ function DroneHero() {
           <pointLight position={[-3, 1, -2]} intensity={0.8} color="#a78bfa" />
 
           <Suspense fallback={null}>
-            <DroneModel />
+            <DroneModel scrollProgressRef={scrollProgressRef} />
             {/* PBR environment map — gives the drone metallic reflections */}
             <Environment preset="studio" />
           </Suspense>

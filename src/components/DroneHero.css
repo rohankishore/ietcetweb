@@ -66,8 +66,8 @@
   will-change: opacity, transform;
 }
 
-/* Final phrase — sits above the canvas (z:3) so it reads as a headline once
-   the drone fades. Full-brightness gradient text, no dimming. */
+/* Final phrase — sits above the canvas (z:3) so it reads as the main headline
+   once the drone fades. Full-brightness gradient, perfectly centred. */
 .drone-hero__phrase--final {
   z-index: 3;
   color: transparent;
@@ -76,7 +76,9 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: none;
-  filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.6));
+  filter: drop-shadow(0 0 48px rgba(139, 92, 246, 0.65));
+  /* Guarantee perfect centering — JS sets transform:none once fully revealed */
+  transform: none;
 }
 
 /* ── Canvas (old rule — kept for safety) ──────────────────────────── */
