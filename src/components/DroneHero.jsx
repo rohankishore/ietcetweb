@@ -53,8 +53,8 @@ function CameraRig({ scrollProgressRef }) {
   useFrame((state, delta) => {
     const p = scrollProgressRef.current;
 
-    // Z: 0.8 (close macro shot) → 5.5 (full overview)
-    const targetZ = 0.8 + p * 4.7;
+    // Z: 0.8 (close macro shot) → 3.0 (comfortable full-drone view)
+    const targetZ = 0.8 + p * 2.2;
     // Y: slight downward tilt at start that levels off as we pull back
     const targetY = 0.28 * (1 - p);
 
@@ -70,13 +70,14 @@ function CameraRig({ scrollProgressRef }) {
 // ─── Hero section ────────────────────────────────────────────────────────────
 
 function DroneHero() {
-  const sectionRef        = useRef(null);
-  const phrase1Ref        = useRef(null);
-  const phrase2Ref        = useRef(null);
-  const phrase3Ref        = useRef(null);
-  const textRef           = useRef(null);
-  const scrollHintRef     = useRef(null);
-  const scrollProgressRef = useRef(0);
+  const sectionRef         = useRef(null);
+  const phrase1Ref          = useRef(null);
+  const phrase2Ref          = useRef(null);
+  const phrase3Ref          = useRef(null);
+  const textRef             = useRef(null);
+  const scrollHintRef       = useRef(null);
+  const canvasWrapperRef    = useRef(null);
+  const scrollProgressRef   = useRef(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -91,32 +92,38 @@ function DroneHero() {
 
       scrollProgressRef.current = progress;
 
-      // ── Phrase 1: visible immediately, fades out at 25–35 %
+      // ── Phrase 1: visible immediately, fades out 40–52 %
       if (phrase1Ref.current) {
-        const o = progress < 0.25 ? 1 : Math.max(0, 1 - (progress - 0.25) / 0.10);
+        const o = progress < 0.40 ? 1 : Math.max(0, 1 - (progress - 0.40) / 0.12);
         phrase1Ref.current.style.opacity = o;
         phrase1Ref.current.style.transform = `translateY(0px)`;
       }
 
-      // ── Phrase 2: "Engineering meets ambition."  33 % → 67 %
+      // ── Phrase 2: fades in 45–55 %, stays until 70 %, fades out 70–82 %
       if (phrase2Ref.current) {
-        const o = fade(progress, 0.33, 0.44, 0.57, 0.67);
+        const o = fade(progress, 0.45, 0.55, 0.70, 0.82);
         phrase2Ref.current.style.opacity = o;
         phrase2Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
       }
 
-      // ── Phrase 3: "This is IET On-Campus CET."  67 % → 97 %
+      // ── Phrase 3: fades in 75–85 %, stays until 92 %, fades out 92–98 %
       if (phrase3Ref.current) {
-        const o = fade(progress, 0.67, 0.78, 0.89, 0.97);
+        const o = fade(progress, 0.75, 0.85, 0.92, 0.98);
         phrase3Ref.current.style.opacity = o;
         phrase3Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
       }
 
-      // ── Final CTA block: fades in from 75 %
+      // ── Final CTA block: fades in from 88 %
       if (textRef.current) {
-        const t = Math.max(0, Math.min(1, (progress - 0.75) / 0.20));
+        const t = Math.max(0, Math.min(1, (progress - 0.88) / 0.10));
         textRef.current.style.opacity = t;
         textRef.current.style.transform = `translateY(${(1 - t) * 24}px)`;
+      }
+
+      // ── Drone canvas: fade out 93–100 %
+      if (canvasWrapperRef.current) {
+        const cv = Math.max(0, 1 - (progress - 0.93) / 0.07);
+        canvasWrapperRef.current.style.opacity = cv;
       }
 
       // Fade the scroll hint out quickly
@@ -166,7 +173,7 @@ function DroneHero() {
         </div>
 
         {/* ── Three.js canvas — z:2 with alpha:true so phrases show through  */}
-        <div className="drone-hero__canvas-wrapper">
+        <div className="drone-hero__canvas-wrapper" ref={canvasWrapperRef}>
         <Canvas
           camera={{ position: [0, 0.28, 0.8], fov: 60, near: 0.1, far: 100 }}
           gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}

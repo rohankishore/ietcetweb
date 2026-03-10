@@ -6,8 +6,8 @@
 
 .drone-hero {
   position: relative;
-  /* 300 vh = 100 vh visible + 200 vh of scroll travel for the animation */
-  height: 300vh;
+  /* 500 vh = 100 vh visible + 400 vh of scroll travel for longer text dwell */
+  height: 500vh;
   z-index: 0;
 }
 
@@ -31,6 +31,7 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  will-change: opacity;
 }
 
 .drone-hero__canvas-wrapper canvas {
