@@ -119,13 +119,7 @@ function PlugSection({ onPlugChange }) {
           
           <div className="plug-section__interaction">
             <div className={`plug-scene ${isPlugged ? 'plug-scene--active' : ''}`}>
-              <ElectricBorder
-                color={isPlugged ? "#22c55e" : "#6366f1"}
-                speed={isPlugged ? 2 : 1}
-                chaos={isPlugged ? 1.5 : 1}
-                thickness={3}
-                className="plug-track-border"
-              >
+
                 <div className="plug-track" ref={trackRef}>
                   <div
                     className="plug-cable"
@@ -147,7 +141,6 @@ function PlugSection({ onPlugChange }) {
                     <span className="plug-outlet__face"></span>
                   </div>
                 </div>
-              </ElectricBorder>
             </div>
             
             {isPlugged ? (
