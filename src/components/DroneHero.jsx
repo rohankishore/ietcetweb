@@ -175,7 +175,7 @@ function DroneHero() {
           Engineering meets ambition.
         </div>
         <div ref={phrase3Ref} className="drone-hero__phrase drone-hero__phrase--final" style={{ opacity: 0 }}>
-          This is IET On-Campus CET.
+          THIS IS IET ON CAMPUS CET.
         </div>
 
         <div className="drone-hero__canvas-wrapper" ref={canvasWrapperRef}>
