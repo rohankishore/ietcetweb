@@ -4,11 +4,8 @@ import { useGLTF, Center, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import './DroneHero.css';
 
-// Kick off GLTF fetch as early as possible
 useGLTF.preload('/models/drone.glb');
 
-// Helper: maps progress p to an opacity value that fades in [i0→i1] and out [o0→o1].
-// Pass o0=null to skip the fade-out (stays visible).
 function fade(p, i0, i1, o0, o1) {
   if (p < i0) return 0;
   if (p < i1) return (p - i0) / (i1 - i0);
@@ -18,14 +15,11 @@ function fade(p, i0, i1, o0, o1) {
   return 0;
 }
 
-// ─── Drone mesh ──────────────────────────────────────────────────────────────
 
 function DroneModel() {
   const { scene } = useGLTF('/models/drone.glb');
   const groupRef = useRef();
 
-  // Compute a uniform scale so the longest axis of the drone equals 2 world units.
-  // We read the bounding box of the raw scene before any group transforms apply.
   const normalizedScale = useMemo(() => {
     const box = new THREE.Box3().setFromObject(scene);
     const size = box.getSize(new THREE.Vector3());
@@ -33,15 +27,12 @@ function DroneModel() {
     return 2 / (maxDim || 1);
   }, [scene]);
 
-  // Slow Y-axis rotation for a cinematic "orbit" feel
   useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.25;
     }
   });
 
-  // <Center> auto-offsets children so their bounding box is at the group origin.
-  // The outer <group> then applies the normalised scale.
   return (
     <group ref={groupRef} scale={normalizedScale}>
       <Center>
@@ -62,8 +53,8 @@ function CameraRig({ scrollProgressRef }) {
   useFrame((state, delta) => {
     const p = scrollProgressRef.current;
 
-    // Z: 0.5 (ultra-close macro shot) → 5.5 (full overview)
-    const targetZ = 0.5 + p * 5;
+    // Z: 0.8 (close macro shot) → 5.5 (full overview)
+    const targetZ = 0.8 + p * 4.7;
     // Y: slight downward tilt at start that levels off as we pull back
     const targetY = 0.28 * (1 - p);
 
@@ -100,11 +91,11 @@ function DroneHero() {
 
       scrollProgressRef.current = progress;
 
-      // ── Phrase 1: "Machines take flight."  0 % → 35 %
+      // ── Phrase 1: visible immediately, fades out at 25–35 %
       if (phrase1Ref.current) {
-        const o = fade(progress, 0.01, 0.10, 0.25, 0.35);
+        const o = progress < 0.25 ? 1 : Math.max(0, 1 - (progress - 0.25) / 0.10);
         phrase1Ref.current.style.opacity = o;
-        phrase1Ref.current.style.transform = `translateY(${(1 - Math.min(o * 3, 1)) * 28}px)`;
+        phrase1Ref.current.style.transform = `translateY(0px)`;
       }
 
       // ── Phrase 2: "Engineering meets ambition."  33 % → 67 %
@@ -132,10 +123,23 @@ function DroneHero() {
       if (scrollHintRef.current) {
         scrollHintRef.current.style.opacity = Math.max(0, 1 - progress * 5);
       }
+
+      // Hide the navbar while inside the drone hero scroll; restore after
+      if (progress < 1) {
+        document.body.classList.add('drone-hero-active');
+      } else {
+        document.body.classList.remove('drone-hero-active');
+      }
     };
 
+    // Hide navbar immediately on mount
+    document.body.classList.add('drone-hero-active');
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      document.body.classList.remove('drone-hero-active');
+    };
   }, []);
 
   return (
@@ -151,7 +155,7 @@ function DroneHero() {
         {/* ── Phrases — rendered at z:1, below the canvas at z:2.          */}
         {/* Transparent canvas pixels let them show through; drone geometry  */}
         {/* paints over them, giving a true "behind the drone" layering.     */}
-        <div ref={phrase1Ref} className="drone-hero__phrase" style={{ opacity: 0 }}>
+        <div ref={phrase1Ref} className="drone-hero__phrase" style={{ opacity: 1 }}>
           Machines take flight.
         </div>
         <div ref={phrase2Ref} className="drone-hero__phrase" style={{ opacity: 0 }}>
@@ -164,7 +168,7 @@ function DroneHero() {
         {/* ── Three.js canvas — z:2 with alpha:true so phrases show through  */}
         <div className="drone-hero__canvas-wrapper">
         <Canvas
-          camera={{ position: [0, 0.28, 0.5], fov: 60, near: 0.1, far: 100 }}
+          camera={{ position: [0, 0.28, 0.8], fov: 60, near: 0.1, far: 100 }}
           gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
           dpr={[1, 2]}
           aria-hidden="true"
