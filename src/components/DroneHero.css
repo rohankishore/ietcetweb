@@ -10,6 +10,22 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: 'MangoGrotesque';
+  src: url('/fonts/Mango Grotesque-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Humane';
+  src: url('/fonts/Humane-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
 /* ── Scroll runway ────────────────────────────────────────────────── */
 
 .drone-hero {
@@ -58,7 +74,7 @@
   justify-content: center;
   text-align: center;
   padding: 0 4vw;
-  font-family: 'Thomeo', sans-serif;
+  font-family: 'MangoGrotesque', sans-serif;
   font-size: clamp(2.25rem, 7.5vw, 7rem);
   font-weight: 900;
   line-height: 1.08;
@@ -79,6 +95,7 @@
    once the drone fades. Full-brightness gradient, perfectly centred. */
 .drone-hero__phrase--final {
   z-index: 3;
+  font-family: 'Humane', sans-serif;
   color: transparent;
   background: linear-gradient(135deg, #ffffff 0%, #a78bfa 55%, #6366f1 100%);
   -webkit-background-clip: text;
