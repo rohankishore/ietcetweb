@@ -44,7 +44,7 @@
   width: 100%;
   overflow: hidden;
   /* Site background — canvas is transparent so this shows through */
-  background: #090614;
+  background: #000000;
 }
 
 /* ── Canvas wrapper (z:2) ─────────────────────────────────────────── */
@@ -97,7 +97,7 @@
   z-index: 3;
   font-family: 'Humane', sans-serif;
   color: transparent;
-  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 55%, #6366f1 100%);
+  background: var(--gradient-accent-strong);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -130,10 +130,10 @@
 .drone-hero__badge {
   display: inline-block;
   padding: 0.5rem 1.5rem;
-  background: rgba(99, 102, 241, 0.2);
-  border: 1px solid rgba(99, 102, 241, 0.4);
+  background: rgba(10, 10, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50px;
-  color: #a78bfa;
+  color: #f5f5f5;
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -149,7 +149,7 @@
   font-weight: 800;
   line-height: 1.1;
   margin: 0 0 1rem;
-  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -205,8 +205,8 @@
 .drone-hero__chevron {
   width: 12px;
   height: 12px;
-  border-right: 2px solid rgba(167, 139, 250, 0.65);
-  border-bottom: 2px solid rgba(167, 139, 250, 0.65);
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
   transform: rotate(45deg);
 }
 

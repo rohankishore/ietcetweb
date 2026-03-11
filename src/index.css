@@ -5,18 +5,22 @@
   font-weight: 400;
 
   /* Color Palette */
-  --primary-color: #6366f1;
-  --secondary-color: #8b5cf6;
-  --accent-color: #a78bfa;
-  --bg-dark: #0f0d21;
-  --bg-darker: #09070f;
+  --primary-color: #0a0a0a;
+  --secondary-color: #151515;
+  --accent-color: #1f1f1f;
+  --bg-dark: #050505;
+  --bg-darker: #000000;
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.8);
   --text-muted: rgba(255, 255, 255, 0.6);
+  --text-accent: #a78bfa;
+  --text-accent-strong: #8b5cf6;
   
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
-  --gradient-bg: linear-gradient(180deg, rgba(18, 15, 32, 0.96), rgba(9, 7, 18, 0.98));
+  --gradient-primary: linear-gradient(135deg, #0a0a0a, #1c1c1c);
+  --gradient-bg: linear-gradient(180deg, rgba(5, 5, 5, 0.96), rgba(0, 0, 0, 0.98));
+  --gradient-accent: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  --gradient-accent-strong: linear-gradient(135deg, #6366f1, #8b5cf6);
   
   color-scheme: dark;
   color: var(--text-primary);
@@ -74,17 +78,17 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.5);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+  background: rgba(255, 255, 255, 0.35);
 }
 
 /* Selection */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   color: var(--text-primary);
 }
 

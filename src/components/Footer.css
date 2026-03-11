@@ -1,8 +1,9 @@
 .footer {
-  background: rgba(15, 13, 33, 0.95);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 5, 5, 0.95);
+  border-top: 1px solid rgba(167, 139, 250, 0.35);
   padding: 3rem 2rem 2rem;
   margin-top: 4rem;
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.45);
 }
 
 .footer .container {
@@ -27,7 +28,7 @@
 }
 
 .footer__social-link:hover {
-  color: #a78bfa;
+  color: var(--text-accent-strong);
   transform: translateY(-3px);
 }
 
@@ -45,7 +46,7 @@
 .footer__credits {
   margin-bottom: 1.5rem;
   padding: 1.5rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .footer__credits p {
@@ -56,7 +57,7 @@
 
 .footer__copyright {
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .footer__copyright p {

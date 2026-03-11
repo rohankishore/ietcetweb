@@ -6,7 +6,7 @@
 .events-hero {
   padding: 6rem 2rem 4rem;
   text-align: center;
-  background: linear-gradient(180deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, transparent 100%);
 }
 
 .events-hero__content {
@@ -48,12 +48,12 @@
 
 .event-year-chip:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(139, 92, 246, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
 .event-year-chip--active {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, #0a0a0a, #1c1c1c);
   border-color: transparent;
   color: #fff;
 }
@@ -72,7 +72,11 @@
   font-weight: 700;
   margin-bottom: 3rem;
   text-align: center;
-  color: #fff;
+  color: transparent;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   position: relative;
   padding-bottom: 1.5rem;
 }
@@ -85,7 +89,7 @@
   transform: translateX(-50%);
   width: 100px;
   height: 3px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, #f5f5f5, #b5b5b5);
   border-radius: 2px;
 }
 
@@ -108,9 +112,9 @@
 
 .event-card:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(139, 92, 246, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .event-card__image {
@@ -150,10 +154,10 @@
 .event-card__type {
   display: inline-block;
   padding: 0.375rem 0.875rem;
-  background: rgba(99, 102, 241, 0.2);
-  border: 1px solid rgba(99, 102, 241, 0.4);
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 50px;
-  color: #a78bfa;
+  color: #f5f5f5;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -170,13 +174,17 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: #fff;
+  color: transparent;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1.3;
 }
 
 .event-card__quote {
   font-size: 1rem;
-  color: #a78bfa;
+  color: var(--text-accent);
   font-style: italic;
   margin-bottom: 1rem;
   line-height: 1.5;
@@ -191,7 +199,7 @@
 }
 
 .event-card__link {
-  color: #8b5cf6;
+  color: var(--text-accent);
   font-weight: 600;
   text-decoration: none;
   display: inline-flex;
@@ -202,7 +210,7 @@
 }
 
 .event-card__link:hover {
-  color: #a78bfa;
+  color: var(--text-accent-strong);
   gap: 0.75rem;
 }
 

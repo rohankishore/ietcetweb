@@ -6,7 +6,9 @@
   z-index: 1000;
   padding: 1.5rem 0;
   transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s ease, padding 0.3s ease;
-  background: transparent;
+  background: rgba(5, 5, 5, 0.85);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.25);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
 }
 
 /* Hidden while the drone hero scroll animation is running */
@@ -17,10 +19,11 @@
 }
 
 .navbar--scrolled {
-  background: rgba(15, 13, 33, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(5, 5, 5, 0.95);
+  backdrop-filter: blur(18px);
   padding: 1rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+  border-bottom-color: rgba(167, 139, 250, 0.35);
 }
 
 .navbar__container {
@@ -100,12 +103,12 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, #f5f5f5, #b5b5b5);
   transition: width 0.3s ease;
 }
 
 .navbar__link:hover {
-  color: #a78bfa;
+  color: #f5f5f5;
 }
 
 .navbar__link:hover::after,
@@ -114,7 +117,7 @@
 }
 
 .navbar__link--active {
-  color: #a78bfa;
+  color: #f5f5f5;
 }
 
 @media (max-width: 768px) {
@@ -129,7 +132,7 @@
     width: 100%;
     max-width: 300px;
     height: 100vh;
-    background: rgba(15, 13, 33, 0.98);
+    background: rgba(5, 5, 5, 0.98);
     backdrop-filter: blur(20px);
     flex-direction: column;
     justify-content: center;
