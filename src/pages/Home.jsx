@@ -1,21 +1,12 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
-import PlugSection from '../components/PlugSection';
 import DroneHero from '../components/DroneHero';
 import './Home.css';
 
 function Home() {
-  const [isPlugged, setIsPlugged] = useState(false);
-
   return (
     <div className="home">
       <DroneHero />
-
-      <PlugSection onPlugChange={setIsPlugged} />
-
-      {isPlugged && (
-        <>
       <section id="about" className="power-hub">
         <div className="container">
           <motion.div
@@ -135,8 +126,6 @@ function Home() {
           </div>
         </div>
       </section>
-        </>
-      )}
     </div>
   );
 }
