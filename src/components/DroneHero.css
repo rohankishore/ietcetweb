@@ -11,8 +11,8 @@
 }
 
 @font-face {
-  font-family: 'MangoGrotesque';
-  src: url('/fonts/Mango Grotesque-VF.ttf') format('truetype');
+  font-family: 'Technor';
+  src: url('/fonts/Technor-Variable.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
   font-display: block;
@@ -74,7 +74,7 @@
   justify-content: center;
   text-align: center;
   padding: 0 4vw;
-  font-family: 'MangoGrotesque', sans-serif;
+  font-family: 'Technor', sans-serif;
   font-size: clamp(2.25rem, 7.5vw, 7rem);
   font-weight: 900;
   line-height: 1.08;
