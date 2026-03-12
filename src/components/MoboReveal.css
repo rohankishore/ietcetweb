@@ -68,16 +68,20 @@
 .mobo-flight__canvas {
   position: relative;
   width: min(1100px, 92vw);
-  height: min(440px, 60vh);
+  height: min(520px, 70vh);
   z-index: 2;
   pointer-events: none;
   overflow: visible;
   transition: opacity 0.25s ease;
+  background: transparent;
 }
 
 .mobo-flight__canvas canvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 130% !important;
+  height: 130% !important;
+  margin-left: -15%;
+  margin-top: -15%;
+  background: transparent !important;
 }
 
 @media (max-width: 768px) {

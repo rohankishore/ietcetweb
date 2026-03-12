@@ -34,7 +34,7 @@ function MoboModel({ scrollProgressRef }) {
     }
 
     if (chassisRef.current) {
-      chassisRef.current.rotation.y += delta * (0.28 + eased * 0.28);
+      chassisRef.current.rotation.y += delta * (0.15 + eased * 0.12);
       chassisRef.current.rotation.x = Math.sin(t * 0.19) * 0.05;
       chassisRef.current.rotation.z = Math.sin(t * 0.27) * 0.035;
     }
@@ -107,6 +107,7 @@ function MoboReveal() {
             <Canvas
               camera={{ position: [0.45, 0.55, 2.1], fov: 52, near: 0.1, far: 70 }}
               gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
+              style={{ background: 'transparent' }}
               dpr={[1, 2]}
               aria-hidden="true"
             >
