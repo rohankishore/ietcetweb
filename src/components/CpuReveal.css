@@ -43,6 +43,7 @@
   margin: 0;
   font-size: clamp(2.8rem, 8vw, 6rem);
   line-height: 1;
+  font-family: 'Technor', sans-serif;
   background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
