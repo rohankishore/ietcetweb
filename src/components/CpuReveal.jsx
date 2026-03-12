@@ -64,7 +64,7 @@ function CpuReveal() {
       const progress = THREE.MathUtils.clamp(raw, 0, 1);
       scrollProgressRef.current = progress;
 
-      const shouldReveal = progress > 0.45;
+      const shouldReveal = progress > 0.5;
       setHeadingRevealed((prev) => (prev === shouldReveal ? prev : shouldReveal));
     };
 
@@ -74,29 +74,26 @@ function CpuReveal() {
   }, []);
 
   return (
-    <section id="recent-builds" ref={sectionRef} className="cpu-stage">
-      <div className="cpu-stage__sticky">
-        <div className="cpu-stage__visual">
-          <div className={`cpu-stage__heading ${headingRevealed ? 'cpu-stage__heading--revealed' : ''}`}>
-            <span className={`section-badge cpu-stage__badge ${headingRevealed ? 'cpu-stage__badge--active' : ''}`}>
-              Recent Builds
-            </span>
+    <section id="recent-builds" ref={sectionRef} className="cpu-flight">
+      <div className="cpu-flight__sticky">
+        <div className="cpu-flight__stage">
+          <div className={`cpu-flight__heading ${headingRevealed ? 'cpu-flight__heading--show' : ''}`}>
+            <span className="cpu-flight__label">Recent Builds</span>
             <h2>Recent builds lighting up CET</h2>
           </div>
 
-          <div className="cpu-stage__canvas">
-            <div className="cpu-stage__halo" aria-hidden="true" />
+          <div className="cpu-flight__canvas">
             <Canvas
-              camera={{ position: [0.5, 0.45, 1.8], fov: 50, near: 0.1, far: 60 }}
+              camera={{ position: [0.45, 0.38, 1.9], fov: 52, near: 0.1, far: 70 }}
               gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
               dpr={[1, 2]}
               aria-hidden="true"
             >
-              <ambientLight intensity={0.28} />
+              <ambientLight intensity={0.25} />
               <hemisphereLight intensity={0.35} groundColor="#020617" color="#dbeafe" />
-              <directionalLight position={[2.8, 3.4, 1.6]} intensity={1.6} color="#c084fc" />
-              <directionalLight position={[-2.4, -3, -2]} intensity={0.9} color="#38bdf8" />
-              <pointLight position={[0, 1.2, 0]} intensity={0.8} color="#f472b6" />
+              <directionalLight position={[3.2, 3.6, 1.4]} intensity={1.8} color="#c084fc" />
+              <directionalLight position={[-2.6, -3.2, -1.8]} intensity={0.85} color="#38bdf8" />
+              <pointLight position={[0, 1.4, 0]} intensity={0.8} color="#f472b6" />
 
               <Suspense fallback={null}>
                 <CpuModel scrollProgressRef={scrollProgressRef} />
@@ -104,11 +101,6 @@ function CpuReveal() {
               </Suspense>
             </Canvas>
           </div>
-
-          <p className="cpu-stage__caption">
-            The CPU rig that parses CODE reCET telemetry floats center-stage so you feel the lab energy before the
-            project blurbs scroll into view.
-          </p>
         </div>
       </div>
     </section>
