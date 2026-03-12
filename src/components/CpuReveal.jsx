@@ -16,7 +16,7 @@ function CpuModel({ scrollProgressRef }) {
     const box = new THREE.Box3().setFromObject(scene);
     const size = box.getSize(new THREE.Vector3());
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    return 2.1 / maxDim;
+    return 1.9 / maxDim;
   }, [scene]);
 
   useFrame((state, delta) => {
