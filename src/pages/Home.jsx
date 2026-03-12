@@ -1,15 +1,14 @@
 import { motion } from 'framer-motion';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import DroneHero from '../components/DroneHero';
-import MoboReveal from '../components/MoboReveal';
-import CpuReveal from '../components/CpuReveal';
+import ScrollLensShowcase from '../components/ScrollLensShowcase';
 import './Home.css';
 
 function Home() {
   return (
     <div className="home">
       <DroneHero />
-      <MoboReveal />
+      <ScrollLensShowcase />
       <section id="about" className="power-hub">
         <div className="container">
           <motion.div
@@ -89,8 +88,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      <CpuReveal />
 
       <section className="highlights">
         <div className="container">
