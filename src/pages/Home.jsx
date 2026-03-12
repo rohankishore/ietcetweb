@@ -158,7 +158,7 @@ function Home() {
 
           <div className="recent-builds-container">
             <div className="recent-builds-copy" ref={headingRef}>
-              <p className="recent-builds__kicker">Recent Builds Lighting up CET</p>
+              <p className="recent-builds__kicker">Recent events</p>
               <h2 className="recent-builds-title">
                 Recent<br />
                 Builds<br />
@@ -166,7 +166,8 @@ function Home() {
                 CET
               </h2>
               <p className="recent-builds__desc">
-                Discover the amazing events and initiatives crafted by our passionate members.
+                A snapshot of the flagship experiments our squads are polishing for demo days, competitions, and community deployment.
+                
                 We bridge the gap between theoretical knowledge and practical engineering.
               </p>
             </div>
@@ -205,34 +206,38 @@ function Home() {
       <section className="highlights">
         <div className="container">
           <div className="projects-grid">
-            <motion.article
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="project-card project-card--feature"
             >
-              <span className="project-card__badge">Flagship Initiative</span>
-              <h3 className="project-card__title">CODE reCET</h3>
-              <p className="project-card__description">
-                Our campus-wide coding league delivering adaptive missions, live leaderboards, 
-                and mentorship for every skill tier across the semester.
-              </p>
-              <div className="project-card__stats">
-                <div>
-                  <span>36</span>
-                  hours
+              <SpotlightCard 
+                className="project-card project-card--feature"
+                spotlightColor="rgba(167, 139, 250, 0.3)"
+              >
+                <span className="project-card__badge">Flagship Initiative</span>
+                <h3 className="project-card__title">CODE reCET</h3>
+                <p className="project-card__description">
+                  Our campus-wide coding league delivering adaptive missions, live leaderboards, 
+                  and mentorship for every skill tier across the semester.
+                </p>
+                <div className="project-card__stats">
+                  <div>
+                    <span>36</span>
+                    hours
+                  </div>
+                  <div>
+                    <span>100+</span>
+                    live participants
+                  </div>
+                  <div>
+                    <span>24/7</span>
+                    mentor support
+                  </div>
                 </div>
-                <div>
-                  <span>100+</span>
-                  live participants
-                </div>
-                <div>
-                  <span>24/7</span>
-                  mentor support
-                </div>
-              </div>
-            </motion.article>
+              </SpotlightCard>
+            </motion.div>
           </div>
         </div>
       </section>
