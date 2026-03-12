@@ -22,8 +22,7 @@ function ScrollLensShowcase() {
 
       // Keep animation in the disc-rotation phase, then let page flow onward.
       const rotationPhase = segment(progress, 0.02, 0.28);
-      const exitPhase = segment(progress, 0.3, 0.52);
-      const hud = 1 - exitPhase * 0.9;
+      const hud = 1;
       const glow = 0.25 + rotationPhase * 0.55;
       const spin = rotationPhase * 210;
 
@@ -53,8 +52,6 @@ function ScrollLensShowcase() {
     const hudDots = stage.querySelectorAll('.lens-hud__dot');
     const hudBands = stage.querySelectorAll('.lens-hud__band');
     const hudScan = stage.querySelector('.lens-hud__scan');
-    const assemblyRings = stage.querySelectorAll('.lens-assembly__ring');
-
 
     const animations = [
       animate(hudTicks, {
@@ -88,12 +85,6 @@ function ScrollLensShowcase() {
         duration: 1900,
         loop: true,
       }),
-      animate(assemblyRings, {
-        rotate: (el, idx) => (idx % 2 === 0 ? [0, 360] : [0, -360]),
-        easing: 'linear',
-        duration: 9200,
-        loop: true,
-      }),
     ];
 
     return () => {
@@ -103,7 +94,6 @@ function ScrollLensShowcase() {
         hudDots,
         hudBands,
         hudScan,
-        assemblyRings,
       ]);
     };
   }, []);
@@ -150,37 +140,6 @@ function ScrollLensShowcase() {
                     style={{ '--angle': `${(idx / 26) * 360}deg` }}
                   />
                 ))}
-              </div>
-            </div>
-
-            <div className="lens-assembly" aria-hidden="true">
-              <span className="lens-assembly__ring lens-assembly__ring--a" />
-              <span className="lens-assembly__ring lens-assembly__ring--b" />
-              <span className="lens-assembly__ring lens-assembly__ring--c" />
-              <span className="lens-assembly__shell" />
-              <span className="lens-assembly__core" />
-              <span className="lens-assembly__front" />
-              <span className="lens-assembly__rear" />
-              <div className="lens-assembly__ribs">
-                {Array.from({ length: 22 }).map((_, idx) => (
-                  <span key={`rib-${idx}`} className="lens-assembly__rib" />
-                ))}
-              </div>
-            </div>
-
-            <div className="lens-explode" aria-hidden="true">
-              <div className="lens-explode__cluster">
-                <span className="lens-explode__pill lens-explode__pill--top" />
-                <span className="lens-explode__pill lens-explode__pill--mid-a" />
-                <span className="lens-explode__pill lens-explode__pill--mid-b" />
-                <span className="lens-explode__pill lens-explode__pill--bot" />
-                <span className="lens-explode__slab" />
-                <div className="lens-explode__stripes">
-                  {Array.from({ length: 22 }).map((_, idx) => (
-                    <span key={`stripe-${idx}`} className="lens-explode__stripe" />
-                  ))}
-                </div>
-                <span className="lens-explode__disk" />
               </div>
             </div>
           </div>

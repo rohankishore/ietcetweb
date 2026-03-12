@@ -461,6 +461,21 @@
   margin-top: 3rem;
 }
 
+.recent-builds-heading {
+  margin-top: clamp(2.2rem, 5vw, 4.5rem);
+  margin-bottom: clamp(0.8rem, 2vw, 1.8rem);
+}
+
+.recent-builds-heading h2 {
+  margin: 0;
+  font-size: clamp(2.2rem, 6.8vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #f8fafc;
+  font-family: 'Technor', sans-serif;
+}
+
 .stat-card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -532,6 +547,17 @@
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+
+  .recent-builds-heading {
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .recent-builds-heading h2 {
+    font-size: clamp(1.9rem, 10vw, 3rem);
+    line-height: 0.92;
+    text-align: left;
   }
 
   .power-hub__header {

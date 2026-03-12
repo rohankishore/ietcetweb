@@ -94,6 +94,24 @@ function Home() {
               </SpotlightCard>
             </motion.div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="recent-builds-heading"
+          >
+            <h2>
+              RECENT
+              <br />
+              BUILDS
+              <br />
+              LICHTINC UP
+              <br />
+              CET
+            </h2>
+          </motion.div>
         </div>
       </section>
 
