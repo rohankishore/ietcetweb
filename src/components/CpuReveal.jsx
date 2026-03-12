@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import anime from 'animejs/lib/anime.es.js';
+import { animate, random, remove, stagger } from 'animejs';
 import './CpuReveal.css';
 
 const clamp01 = (value) => Math.max(0, Math.min(1, value));
@@ -56,8 +56,7 @@ function CpuReveal() {
     const pins = root.querySelectorAll('.cpu-anim__pin');
 
     const animations = [
-      anime({
-        targets: chip,
+      animate(chip, {
         rotate: [0, 3, -2, 1, 0],
         translateY: [0, -10, 6, -4, 0],
         scale: [1, 1.03, 0.995, 1],
@@ -65,8 +64,7 @@ function CpuReveal() {
         duration: 4800,
         loop: true,
       }),
-      anime({
-        targets: halo,
+      animate(halo, {
         scale: [0.9, 1.18],
         opacity: [0.28, 0.5, 0.2],
         easing: 'easeInOutQuad',
@@ -74,40 +72,36 @@ function CpuReveal() {
         direction: 'alternate',
         loop: true,
       }),
-      anime({
-        targets: shine,
+      animate(shine, {
         translateX: ['-130%', '130%'],
         easing: 'easeInOutQuart',
         duration: 2300,
         loop: true,
       }),
-      anime({
-        targets: traces,
+      animate(traces, {
         opacity: [0.18, 0.72],
         scaleX: [0.88, 1.08],
         easing: 'easeInOutSine',
-        delay: anime.stagger(110),
+        delay: stagger(110),
         duration: 1500,
         direction: 'alternate',
         loop: true,
       }),
-      anime({
-        targets: sparks,
+      animate(sparks, {
         translateY: [12, -26],
-        translateX: () => anime.random(-8, 8),
+        translateX: () => random(-8, 8),
         opacity: [0, 0.95, 0],
         scale: [0.6, 1.3, 0.8],
         easing: 'easeOutSine',
-        delay: anime.stagger(120, { from: 'center' }),
+        delay: stagger(120, { from: 'center' }),
         duration: 1750,
         loop: true,
       }),
-      anime({
-        targets: pins,
+      animate(pins, {
         translateY: [0, -4, 0],
         opacity: [0.5, 1, 0.5],
         easing: 'easeInOutSine',
-        delay: anime.stagger(40),
+        delay: stagger(40),
         duration: 900,
         loop: true,
       }),
@@ -115,7 +109,7 @@ function CpuReveal() {
 
     return () => {
       animations.forEach((instance) => instance.pause());
-      anime.remove([chip, halo, shine, traces, sparks, pins]);
+      remove([chip, halo, shine, traces, sparks, pins]);
     };
   }, []);
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import anime from 'animejs/lib/anime.es.js';
+import { animate, remove, stagger } from 'animejs';
 import './MoboReveal.css';
 
 const clamp01 = (value) => Math.max(0, Math.min(1, value));
@@ -56,8 +56,7 @@ function MoboReveal() {
     const packets = root.querySelectorAll('.mobo-anim__packet');
 
     const animations = [
-      anime({
-        targets: board,
+      animate(board, {
         rotate: [0, -2, 3, -1, 0],
         translateY: [0, -8, 4, -2, 0],
         scale: [1, 1.02, 0.998, 1],
@@ -65,8 +64,7 @@ function MoboReveal() {
         duration: 5200,
         loop: true,
       }),
-      anime({
-        targets: glow,
+      animate(glow, {
         opacity: [0.2, 0.52, 0.25],
         scale: [0.92, 1.16],
         easing: 'easeInOutQuad',
@@ -74,40 +72,36 @@ function MoboReveal() {
         direction: 'alternate',
         loop: true,
       }),
-      anime({
-        targets: buses,
+      animate(buses, {
         opacity: [0.25, 0.86],
         scaleX: [0.82, 1.12],
         easing: 'easeInOutSine',
-        delay: anime.stagger(90),
+        delay: stagger(90),
         duration: 1700,
         direction: 'alternate',
         loop: true,
       }),
-      anime({
-        targets: nodes,
+      animate(nodes, {
         scale: [0.78, 1.28, 0.86],
         opacity: [0.45, 1, 0.5],
         easing: 'easeInOutSine',
-        delay: anime.stagger(70, { grid: [6, 4], from: 'center' }),
+        delay: stagger(70, { grid: [6, 4], from: 'center' }),
         duration: 1500,
         loop: true,
       }),
-      anime({
-        targets: chips,
+      animate(chips, {
         translateY: [0, -5, 0],
         rotate: [0, 2, -2, 0],
         easing: 'easeInOutQuad',
-        delay: anime.stagger(140),
+        delay: stagger(140),
         duration: 1900,
         loop: true,
       }),
-      anime({
-        targets: packets,
+      animate(packets, {
         translateX: ['-12%', '112%'],
         opacity: [0, 1, 0],
         easing: 'linear',
-        delay: anime.stagger(240),
+        delay: stagger(240),
         duration: 1800,
         loop: true,
       }),
@@ -115,7 +109,7 @@ function MoboReveal() {
 
     return () => {
       animations.forEach((instance) => instance.pause());
-      anime.remove([board, glow, buses, nodes, chips, packets]);
+      remove([board, glow, buses, nodes, chips, packets]);
     };
   }, []);
 
