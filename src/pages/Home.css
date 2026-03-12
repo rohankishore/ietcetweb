@@ -327,38 +327,9 @@
   .highlight-card {
     padding: 2rem 1.5rem;
   }
-
-  .project-card__canvas {
-    height: 260px;
-  }
 }
 
 /* Projects Grid - CODE reCET Section */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.project-card {
-  position: relative;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 55%);
   opacity: 0;
   transition: opacity 0.4s ease;
