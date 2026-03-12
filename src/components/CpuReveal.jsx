@@ -8,6 +8,7 @@ useGLTF.preload('/models/cpu.glb');
 
 function CpuModel({ scrollProgressRef }) {
   const { scene } = useGLTF('/models/cpu.glb');
+  const tiltRef = useRef(null);
   const chassisRef = useRef(null);
   const liftRef = useRef(null);
 
@@ -23,9 +24,17 @@ function CpuModel({ scrollProgressRef }) {
     const eased = 1 - Math.pow(1 - progress, 2);
     const t = state.clock.getElapsedTime();
 
+    if (tiltRef.current) {
+      const targetTiltX = THREE.MathUtils.lerp(0.28, -0.08, eased);
+      const targetTiltZ = THREE.MathUtils.lerp(-0.14, 0.05, eased);
+      const lerpFactor = Math.min(delta * 3, 1);
+      tiltRef.current.rotation.x += (targetTiltX - tiltRef.current.rotation.x) * lerpFactor;
+      tiltRef.current.rotation.z += (targetTiltZ - tiltRef.current.rotation.z) * lerpFactor;
+    }
+
     if (chassisRef.current) {
       chassisRef.current.rotation.y += delta * (0.35 + eased * 0.35);
-      chassisRef.current.rotation.x = Math.sin(t * 0.22) * 0.06 + THREE.MathUtils.lerp(-0.2, 0.08, eased);
+      chassisRef.current.rotation.x = Math.sin(t * 0.22) * 0.06;
       chassisRef.current.rotation.z = Math.sin(t * 0.31) * 0.04;
     }
 
@@ -35,11 +44,13 @@ function CpuModel({ scrollProgressRef }) {
   });
 
   return (
-    <group ref={chassisRef} scale={normalizedScale}>
-      <group ref={liftRef}>
-        <Center>
-          <primitive object={scene} dispose={null} />
-        </Center>
+    <group ref={tiltRef}>
+      <group ref={chassisRef} scale={normalizedScale}>
+        <group ref={liftRef}>
+          <Center>
+            <primitive object={scene} dispose={null} />
+          </Center>
+        </group>
       </group>
     </group>
   );
