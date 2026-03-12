@@ -111,16 +111,16 @@ function Home() {
               </p>
               <div className="project-card__stats">
                 <div>
-                  <span>8</span>
-                  week circuits
+                  <span>36</span>
+                  hours
                 </div>
                 <div>
-                  <span>140+</span>
-                  live players
+                  <span>100+</span>
+                  live participants
                 </div>
                 <div>
                   <span>24/7</span>
-                  mentor desk
+                  mentor support
                 </div>
               </div>
             </motion.article>
