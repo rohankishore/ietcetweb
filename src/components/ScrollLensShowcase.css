@@ -1,6 +1,6 @@
 .lens-scroll {
   position: relative;
-  min-height: 470vh;
+  min-height: 170vh;
   background: #000000;
   z-index: 2;
 }
@@ -369,7 +369,7 @@
 
 @media (max-width: 1100px) {
   .lens-scroll {
-    min-height: 435vh;
+    min-height: 160vh;
   }
 
   .lens-copy {
@@ -387,7 +387,7 @@
 
 @media (max-width: 768px) {
   .lens-scroll {
-    min-height: 405vh;
+    min-height: 145vh;
   }
 
   .lens-copy {

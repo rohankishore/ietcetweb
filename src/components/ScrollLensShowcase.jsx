@@ -20,16 +20,17 @@ function ScrollLensShowcase() {
       const travel = Math.max(rect.height - viewport, 1);
       const progress = clamp01(-rect.top / travel);
 
-      const hud = 1 - segment(progress, 0.2, 0.35);
-      const assembled = segment(progress, 0.15, 0.32) * (1 - segment(progress, 0.58, 0.74));
-      const exploded = segment(progress, 0.55, 0.84);
-      const glow = segment(progress, 0.06, 0.22) * (1 - segment(progress, 0.84, 1));
-      const spin = progress * 210;
+      // Keep animation in the disc-rotation phase, then let page flow onward.
+      const rotationPhase = segment(progress, 0.02, 0.28);
+      const exitPhase = segment(progress, 0.3, 0.52);
+      const hud = 1 - exitPhase * 0.9;
+      const glow = 0.25 + rotationPhase * 0.55;
+      const spin = rotationPhase * 210;
 
       stage.style.setProperty('--show-progress', progress.toFixed(4));
       stage.style.setProperty('--scene-hud', hud.toFixed(4));
-      stage.style.setProperty('--scene-assembled', assembled.toFixed(4));
-      stage.style.setProperty('--scene-exploded', exploded.toFixed(4));
+      stage.style.setProperty('--scene-assembled', '0');
+      stage.style.setProperty('--scene-exploded', '0');
       stage.style.setProperty('--scene-glow', glow.toFixed(4));
       stage.style.setProperty('--scroll-spin', `${spin.toFixed(2)}deg`);
     };
@@ -93,39 +94,6 @@ function ScrollLensShowcase() {
         duration: 9200,
         loop: true,
       }),
-      animate(assemblyRibs, {
-        translateY: [0, -6, 0],
-        opacity: [0.6, 0.96, 0.62],
-        easing: 'inOutSine',
-        delay: stagger(38),
-        duration: 1300,
-        loop: true,
-      }),
-      animate(explodePills, {
-        translateY: (el, idx) => [0, idx % 2 === 0 ? -10 : 10, 0],
-        translateX: (el, idx) => [0, ((idx % 3) - 1) * 8, 0],
-        rotate: (el, idx) => [0, idx % 2 === 0 ? -3 : 3, 0],
-        easing: 'inOutSine',
-        delay: stagger(90),
-        duration: 3200,
-        loop: true,
-      }),
-      animate(explodeStripes, {
-        opacity: [0.3, 0.95, 0.35],
-        scaleX: [0.92, 1.05, 0.94],
-        easing: 'inOutSine',
-        delay: stagger(40),
-        duration: 1600,
-        loop: true,
-      }),
-      animate(explodeDisk, {
-        translateY: [0, 10, 0],
-        scale: [1, 1.07, 1],
-        opacity: [0.25, 0.7, 0.3],
-        easing: 'inOutSine',
-        duration: 2500,
-        loop: true,
-      }),
     ];
 
     return () => {
@@ -136,10 +104,6 @@ function ScrollLensShowcase() {
         hudBands,
         hudScan,
         assemblyRings,
-        assemblyRibs,
-        explodePills,
-        explodeStripes,
-        explodeDisk,
       ]);
     };
   }, []);
