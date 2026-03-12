@@ -100,8 +100,8 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="project-card"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="project-card project-card--feature"
             >
               <span className="project-card__badge">Flagship Initiative</span>
               <h3 className="project-card__title">CODE reCET</h3>
@@ -109,36 +109,20 @@ function Home() {
                 Our campus-wide coding league delivering adaptive missions, live leaderboards, 
                 and mentorship for every skill tier across the semester.
               </p>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="project-card"
-            >
-              <span className="project-card__badge">Hardware Lab</span>
-              <h3 className="project-card__title">Voltforge Pods</h3>
-              <p className="project-card__description">
-                Rapid-prototyped power modules that let the drone, rover, and IoT crews tap the same hot-swappable
-                cores without touching the bench supply routing.
-              </p>
-            </motion.article>
-
-            <motion.article
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="project-card"
-            >
-              <span className="project-card__badge">Field Trials</span>
-              <h3 className="project-card__title">Sentinel Rover Link</h3>
-              <p className="project-card__description">
-                A mesh of LiDAR beacons, edge AI, and the CPU telemetry backbone that keeps our ground bots aware of
-                every contour on the parade ground.
-              </p>
+              <div className="project-card__stats">
+                <div>
+                  <span>8</span>
+                  week circuits
+                </div>
+                <div>
+                  <span>140+</span>
+                  live players
+                </div>
+                <div>
+                  <span>24/7</span>
+                  mentor desk
+                </div>
+              </div>
             </motion.article>
           </div>
         </div>
