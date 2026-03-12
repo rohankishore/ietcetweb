@@ -14,16 +14,35 @@ function Home() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            anime({
-              targets: '.recent-builds-word',
+            // Animate wording
+            animate('.recent-builds-word', {
               translateY: [60, 0],
               opacity: [0, 1],
               rotateX: [-30, 0],
               scale: [0.8, 1],
               easing: 'easeOutElastic(1, .6)',
               duration: 1800,
-              delay: anime.stagger(150),
+              delay: stagger(150),
             });
+
+            // Animate background HUD
+            animate('.builds-orbit', {
+              opacity: [0, 1],
+              scale: [0.2, 1],
+              rotateZ: (el, i) => [i % 2 === 0 ? -90 : 90, 0],
+              easing: 'easeOutElastic(1, .8)',
+              duration: 2500,
+              delay: stagger(200, { start: 300 }),
+            });
+
+            animate('.builds-grid-dots', {
+              opacity: [0, 0.4],
+              scale: [0.8, 1],
+              duration: 2000,
+              delay: 800,
+              easing: 'easeOutQuad',
+            });
+
             observer.unobserve(entry.target);
           }
         });
@@ -128,16 +147,25 @@ function Home() {
             </motion.div>
           </div>
 
-          <div className="recent-builds-heading" ref={headingRef}>
-            <h2>
-              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>RECENT</div>
-              <br />
-              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>BUILDS</div>
-              <br />
-              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>LIGHTING UP</div>
-              <br />
-              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>CET</div>
-            </h2>
+          <div className="recent-builds-container">
+            <div className="builds-orbital-hud" aria-hidden="true">
+              <div className="builds-orbit builds-orbit-1" />
+              <div className="builds-orbit builds-orbit-2" />
+              <div className="builds-orbit builds-orbit-3" />
+              <div className="builds-grid-dots" />
+            </div>
+
+            <div className="recent-builds-heading" ref={headingRef}>
+              <h2>
+                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>RECENT</div>
+                <br />
+                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>BUILDS</div>
+                <br />
+                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>LIGHTING UP</div>
+                <br />
+                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>CET</div>
+              </h2>
+            </div>
           </div>
         </div>
       </section>

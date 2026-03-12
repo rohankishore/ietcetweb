@@ -58,7 +58,11 @@
   margin: 0;
   font-size: clamp(2rem, 4vw, 4.1rem);
   line-height: 1.02;
-  color: #a046b4;
+  background: var(--gradient-accent);
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-family: 'Technor', sans-serif;
 }
 
