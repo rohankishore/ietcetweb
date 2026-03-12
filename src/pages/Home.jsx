@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import DroneHero from '../components/DroneHero';
+import CpuShowcase from '../components/CpuShowcase';
 import './Home.css';
 
 function Home() {
@@ -109,6 +110,24 @@ function Home() {
           </motion.div>
 
           <div className="projects-grid">
+            <motion.article
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="project-card project-card--cpu"
+            >
+              <span className="project-card__badge">Recent Event</span>
+              <h3 className="project-card__title">NeuroCompute Live Stack</h3>
+              <p className="project-card__description">
+                A weekend sprint where firmware, cloud, and silicon crews stress-tested our in-house CPU
+                pipeline to stream telemetry from autonomous builds.
+              </p>
+              <div className="project-card__canvas">
+                <CpuShowcase />
+              </div>
+            </motion.article>
+
             <motion.article
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
