@@ -833,8 +833,8 @@
   .recent-builds-container {
     grid-template-columns: 1fr;
     min-height: auto;
-    text-align: center;
-    gap: 4rem;
+    text-align: left;
+    gap: 2rem;
   }
 }
 
@@ -864,7 +864,7 @@
 
 @media (max-width: 968px) {
   .recent-builds__desc {
-    margin: 1rem auto 0;
+    margin: 1rem 0 0;
   }
 }
 
