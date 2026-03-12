@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import DroneHero from '../components/DroneHero';
+import MoboReveal from '../components/MoboReveal';
 import CpuReveal from '../components/CpuReveal';
 import './Home.css';
 
@@ -8,6 +9,7 @@ function Home() {
   return (
     <div className="home">
       <DroneHero />
+      <MoboReveal />
       <section id="about" className="power-hub">
         <div className="container">
           <motion.div
@@ -18,9 +20,6 @@ function Home() {
             className="section-intro"
           >
             <span className="section-badge">Our Foundation</span>
-            <h2 className="section-title">
-              Powering Innovation Since 2008
-            </h2>
             <p className="section-subtitle">
               As the first IET chapter in Kerala, inaugurated on November 14, 2008, 
               we've been at the forefront of engineering education and innovation.
