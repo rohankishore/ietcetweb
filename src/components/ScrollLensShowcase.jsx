@@ -59,7 +59,9 @@ function ScrollLensShowcase() {
     const explodePills = stage.querySelectorAll('.lens-explode__pill');
     const explodeStripes = stage.querySelectorAll('.lens-explode__stripe');
     const explodeDisk = stage.querySelector('.lens-explode__disk');
-    const handoffPills = stage.querySelectorAll('.lens-handoff__pill');
+    const handoffRings = stage.querySelectorAll('.lens-handoff__ring');
+    const handoffFins = stage.querySelectorAll('.lens-handoff__fin');
+    const handoffRails = stage.querySelectorAll('.lens-handoff__rail');
 
     const animations = [
       animate(hudTicks, {
@@ -132,12 +134,29 @@ function ScrollLensShowcase() {
         duration: 2500,
         loop: true,
       }),
-      animate(handoffPills, {
-        translateX: ['-5%', '5%'],
-        opacity: [0.22, 0.55, 0.26],
+      animate(handoffRings, {
+        translateY: [0, -6, 0],
+        opacity: [0.24, 0.58, 0.28],
         easing: 'inOutSine',
-        delay: stagger(150),
-        duration: 3000,
+        delay: stagger(160),
+        duration: 2800,
+        direction: 'alternate',
+        loop: true,
+      }),
+      animate(handoffFins, {
+        opacity: [0.35, 0.88, 0.42],
+        scaleY: [0.9, 1.08, 0.92],
+        easing: 'inOutSine',
+        delay: stagger(36),
+        duration: 1400,
+        loop: true,
+      }),
+      animate(handoffRails, {
+        opacity: [0.18, 0.48, 0.22],
+        translateX: ['-1.5%', '1.5%'],
+        easing: 'inOutSine',
+        delay: stagger(120),
+        duration: 2600,
         direction: 'alternate',
         loop: true,
       }),
@@ -155,7 +174,9 @@ function ScrollLensShowcase() {
         explodePills,
         explodeStripes,
         explodeDisk,
-        handoffPills,
+        handoffRings,
+        handoffFins,
+        handoffRails,
       ]);
     };
   }, []);
@@ -238,10 +259,24 @@ function ScrollLensShowcase() {
           </div>
 
           <div className="lens-handoff" aria-hidden="true">
-            <span className="lens-handoff__pill lens-handoff__pill--a" />
-            <span className="lens-handoff__pill lens-handoff__pill--b" />
-            <span className="lens-handoff__pill lens-handoff__pill--c" />
-            <span className="lens-handoff__disk" />
+            <div className="lens-handoff__rails">
+              <span className="lens-handoff__rail lens-handoff__rail--a" />
+              <span className="lens-handoff__rail lens-handoff__rail--b" />
+              <span className="lens-handoff__rail lens-handoff__rail--c" />
+              <span className="lens-handoff__rail lens-handoff__rail--d" />
+            </div>
+            <div className="lens-handoff__model">
+              <span className="lens-handoff__ring lens-handoff__ring--top" />
+              <span className="lens-handoff__ring lens-handoff__ring--mid" />
+              <span className="lens-handoff__ring lens-handoff__ring--low" />
+              <span className="lens-handoff__core" />
+              <div className="lens-handoff__fins">
+                {Array.from({ length: 18 }).map((_, idx) => (
+                  <span key={`handoff-fin-${idx}`} className="lens-handoff__fin" />
+                ))}
+              </div>
+              <span className="lens-handoff__base" />
+            </div>
           </div>
         </div>
       </div>

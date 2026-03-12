@@ -20,19 +20,26 @@ function Home() {
       <ScrollLensShowcase />
       <section id="about" className="power-hub">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="section-intro"
-          >
-            <span className="section-badge">Our Foundation</span>
-            <p className="section-subtitle">
-              As the first IET chapter in Kerala, inaugurated on November 14, 2008, 
-              we've been at the forefront of engineering education and innovation.
-            </p>
-          </motion.div>
+          <div className="power-hub__header">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="section-intro section-intro--side"
+            >
+              <span className="section-badge">Our Foundation</span>
+              <p className="section-subtitle">
+                As the first IET chapter in Kerala, inaugurated on November 14, 2008,
+                we've been at the forefront of engineering education and innovation.
+              </p>
+            </motion.div>
+            <div className="power-hub__model-slot" aria-hidden="true">
+              <span className="power-hub__rail power-hub__rail--a" />
+              <span className="power-hub__rail power-hub__rail--b" />
+              <span className="power-hub__rail power-hub__rail--c" />
+            </div>
+          </div>
 
           <div className="stats-grid">
             <motion.div
