@@ -1,0 +1,252 @@
+import { useEffect, useRef } from 'react';
+import { animate, remove, stagger } from 'animejs';
+import './ScrollLensShowcase.css';
+
+const clamp01 = (value) => Math.max(0, Math.min(1, value));
+const segment = (value, start, end) => clamp01((value - start) / (end - start));
+
+function ScrollLensShowcase() {
+  const sectionRef = useRef(null);
+  const stageRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const stage = stageRef.current;
+    if (!section || !stage) return undefined;
+
+    const updateScrollDrivenState = () => {
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight;
+      const travel = Math.max(rect.height - viewport, 1);
+      const progress = clamp01(-rect.top / travel);
+
+      const hud = 1 - segment(progress, 0.2, 0.35);
+      const assembled = segment(progress, 0.15, 0.32) * (1 - segment(progress, 0.58, 0.74));
+      const exploded = segment(progress, 0.55, 0.84);
+      const glow = segment(progress, 0.06, 0.22) * (1 - segment(progress, 0.84, 1));
+      const handoff = segment(progress, 0.72, 1);
+      const spin = progress * 210;
+
+      stage.style.setProperty('--show-progress', progress.toFixed(4));
+      stage.style.setProperty('--scene-hud', hud.toFixed(4));
+      stage.style.setProperty('--scene-assembled', assembled.toFixed(4));
+      stage.style.setProperty('--scene-exploded', exploded.toFixed(4));
+      stage.style.setProperty('--scene-glow', glow.toFixed(4));
+      stage.style.setProperty('--scene-handoff', handoff.toFixed(4));
+      stage.style.setProperty('--scroll-spin', `${spin.toFixed(2)}deg`);
+    };
+
+    updateScrollDrivenState();
+    window.addEventListener('scroll', updateScrollDrivenState, { passive: true });
+    window.addEventListener('resize', updateScrollDrivenState);
+
+    return () => {
+      window.removeEventListener('scroll', updateScrollDrivenState);
+      window.removeEventListener('resize', updateScrollDrivenState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return undefined;
+
+    const hudTicks = stage.querySelectorAll('.lens-hud__tick');
+    const hudDots = stage.querySelectorAll('.lens-hud__dot');
+    const hudBands = stage.querySelectorAll('.lens-hud__band');
+    const hudScan = stage.querySelector('.lens-hud__scan');
+    const assemblyRings = stage.querySelectorAll('.lens-assembly__ring');
+    const assemblyRibs = stage.querySelectorAll('.lens-assembly__rib');
+    const explodePills = stage.querySelectorAll('.lens-explode__pill');
+    const explodeStripes = stage.querySelectorAll('.lens-explode__stripe');
+    const explodeDisk = stage.querySelector('.lens-explode__disk');
+    const handoffPills = stage.querySelectorAll('.lens-handoff__pill');
+
+    const animations = [
+      animate(hudTicks, {
+        opacity: [0.22, 0.78, 0.22],
+        scaleY: [0.85, 1.2, 1],
+        easing: 'inOutSine',
+        delay: stagger(10),
+        duration: 1200,
+        loop: true,
+      }),
+      animate(hudDots, {
+        translateY: [8, -10],
+        opacity: [0, 1, 0],
+        scale: [0.8, 1.2, 0.75],
+        easing: 'outSine',
+        delay: stagger(100, { from: 'center' }),
+        duration: 1400,
+        loop: true,
+      }),
+      animate(hudBands, {
+        rotate: (el, idx) => (idx % 2 === 0 ? [0, 8, 0] : [0, -10, 0]),
+        opacity: [0.3, 0.88, 0.3],
+        easing: 'inOutQuad',
+        delay: stagger(180),
+        duration: 2400,
+        loop: true,
+      }),
+      animate(hudScan, {
+        translateX: ['-120%', '130%'],
+        easing: 'inOutQuart',
+        duration: 1900,
+        loop: true,
+      }),
+      animate(assemblyRings, {
+        rotate: (el, idx) => (idx % 2 === 0 ? [0, 360] : [0, -360]),
+        easing: 'linear',
+        duration: 9200,
+        loop: true,
+      }),
+      animate(assemblyRibs, {
+        translateY: [0, -6, 0],
+        opacity: [0.6, 0.96, 0.62],
+        easing: 'inOutSine',
+        delay: stagger(38),
+        duration: 1300,
+        loop: true,
+      }),
+      animate(explodePills, {
+        translateY: (el, idx) => [0, idx % 2 === 0 ? -10 : 10, 0],
+        translateX: (el, idx) => [0, ((idx % 3) - 1) * 8, 0],
+        rotate: (el, idx) => [0, idx % 2 === 0 ? -3 : 3, 0],
+        easing: 'inOutSine',
+        delay: stagger(90),
+        duration: 3200,
+        loop: true,
+      }),
+      animate(explodeStripes, {
+        opacity: [0.3, 0.95, 0.35],
+        scaleX: [0.92, 1.05, 0.94],
+        easing: 'inOutSine',
+        delay: stagger(40),
+        duration: 1600,
+        loop: true,
+      }),
+      animate(explodeDisk, {
+        translateY: [0, 10, 0],
+        scale: [1, 1.07, 1],
+        opacity: [0.25, 0.7, 0.3],
+        easing: 'inOutSine',
+        duration: 2500,
+        loop: true,
+      }),
+      animate(handoffPills, {
+        translateX: ['-5%', '5%'],
+        opacity: [0.22, 0.55, 0.26],
+        easing: 'inOutSine',
+        delay: stagger(150),
+        duration: 3000,
+        direction: 'alternate',
+        loop: true,
+      }),
+    ];
+
+    return () => {
+      animations.forEach((instance) => instance.pause());
+      remove([
+        hudTicks,
+        hudDots,
+        hudBands,
+        hudScan,
+        assemblyRings,
+        assemblyRibs,
+        explodePills,
+        explodeStripes,
+        explodeDisk,
+        handoffPills,
+      ]);
+    };
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="lens-scroll" aria-label="IET animation showcase">
+      <div className="lens-scroll__sticky">
+        <div className="lens-scroll__stage" ref={stageRef}>
+          <header className="lens-copy">
+            <p className="lens-copy__kicker">Our Foundation</p>
+            <h2>Powering Innovation Since 2008</h2>
+            <p className="lens-copy__desc">
+              As the first IET chapter in Kerala, inaugurated on November 14, 2008,
+              we continue building immersive engineering experiences through bold execution.
+            </p>
+          </header>
+
+          <div className="lens-view">
+            <div className="lens-hud" aria-hidden="true">
+              <div className="lens-hud__ring lens-hud__ring--outer" />
+              <div className="lens-hud__ring lens-hud__ring--inner" />
+              <div className="lens-hud__bands">
+                <span className="lens-hud__band" />
+                <span className="lens-hud__band" />
+                <span className="lens-hud__band" />
+                <span className="lens-hud__band" />
+              </div>
+              <div className="lens-hud__wave" />
+              <div className="lens-hud__scan" />
+              <div className="lens-hud__ticks">
+                {Array.from({ length: 104 }).map((_, idx) => (
+                  <span
+                    key={`tick-${idx}`}
+                    className="lens-hud__tick"
+                    style={{ '--angle': `${(idx / 104) * 360}deg` }}
+                  />
+                ))}
+              </div>
+              <div className="lens-hud__dots">
+                {Array.from({ length: 26 }).map((_, idx) => (
+                  <span
+                    key={`dot-${idx}`}
+                    className="lens-hud__dot"
+                    style={{ '--angle': `${(idx / 26) * 360}deg` }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="lens-assembly" aria-hidden="true">
+              <span className="lens-assembly__ring lens-assembly__ring--a" />
+              <span className="lens-assembly__ring lens-assembly__ring--b" />
+              <span className="lens-assembly__ring lens-assembly__ring--c" />
+              <span className="lens-assembly__shell" />
+              <span className="lens-assembly__core" />
+              <span className="lens-assembly__front" />
+              <span className="lens-assembly__rear" />
+              <div className="lens-assembly__ribs">
+                {Array.from({ length: 22 }).map((_, idx) => (
+                  <span key={`rib-${idx}`} className="lens-assembly__rib" />
+                ))}
+              </div>
+            </div>
+
+            <div className="lens-explode" aria-hidden="true">
+              <div className="lens-explode__cluster">
+                <span className="lens-explode__pill lens-explode__pill--top" />
+                <span className="lens-explode__pill lens-explode__pill--mid-a" />
+                <span className="lens-explode__pill lens-explode__pill--mid-b" />
+                <span className="lens-explode__pill lens-explode__pill--bot" />
+                <span className="lens-explode__slab" />
+                <div className="lens-explode__stripes">
+                  {Array.from({ length: 22 }).map((_, idx) => (
+                    <span key={`stripe-${idx}`} className="lens-explode__stripe" />
+                  ))}
+                </div>
+                <span className="lens-explode__disk" />
+              </div>
+            </div>
+          </div>
+
+          <div className="lens-handoff" aria-hidden="true">
+            <span className="lens-handoff__pill lens-handoff__pill--a" />
+            <span className="lens-handoff__pill lens-handoff__pill--b" />
+            <span className="lens-handoff__pill lens-handoff__pill--c" />
+            <span className="lens-handoff__disk" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default ScrollLensShowcase;

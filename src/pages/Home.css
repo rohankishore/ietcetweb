@@ -1,6 +1,7 @@
 .home {
   position: relative;
   min-height: 100vh;
+  background: #000000;
 }
 
 .hero {
@@ -137,6 +138,12 @@
   z-index: 1;
   overflow: hidden;
   animation: sectionReveal 1.5s ease-out;
+}
+
+.power-hub {
+  margin-top: -16vh;
+  padding-top: calc(6rem + 16vh);
+  z-index: 4;
 }
 
 @keyframes sectionReveal {
