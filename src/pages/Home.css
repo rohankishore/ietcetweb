@@ -1011,6 +1011,6 @@
 @media (max-width: 968px) {
   .recent-builds-title {
     font-size: clamp(1.55rem, 8.1vw, 2.35rem);
-    text-align: center;
+    text-align: left;
   }
 }
