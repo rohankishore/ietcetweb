@@ -53,10 +53,7 @@ function ScrollLensShowcase() {
     const hudBands = stage.querySelectorAll('.lens-hud__band');
     const hudScan = stage.querySelector('.lens-hud__scan');
     const assemblyRings = stage.querySelectorAll('.lens-assembly__ring');
-    const assemblyRibs = stage.querySelectorAll('.lens-assembly__rib');
-    const explodePills = stage.querySelectorAll('.lens-explode__pill');
-    const explodeStripes = stage.querySelectorAll('.lens-explode__stripe');
-    const explodeDisk = stage.querySelector('.lens-explode__disk');
+
 
     const animations = [
       animate(hudTicks, {
