@@ -1,7 +1,7 @@
 
 .cpu-flight {
   position: relative;
-  min-height: 130vh;
+  min-height: 200vh;
 }
 
 .cpu-flight__sticky {
@@ -73,6 +73,7 @@
   z-index: 2;
   pointer-events: none;
   overflow: visible;
+  transition: opacity 0.25s ease;
 }
 
 .cpu-flight__canvas canvas {
@@ -82,7 +83,7 @@
 
 @media (max-width: 768px) {
   .cpu-flight {
-    min-height: 110vh;
+    min-height: 170vh;
   }
 
   .cpu-flight__stage {

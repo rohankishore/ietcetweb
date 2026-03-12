@@ -58,6 +58,7 @@ function CpuModel({ scrollProgressRef }) {
 
 function CpuReveal() {
   const sectionRef = useRef(null);
+  const canvasWrapperRef = useRef(null);
   const scrollProgressRef = useRef(0);
   const [headingRevealed, setHeadingRevealed] = useState(false);
 
@@ -68,14 +69,24 @@ function CpuReveal() {
     const handleScroll = () => {
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight;
-      const start = viewport * 0.2;
-      const end = viewport * 0.8;
-      const range = Math.max(end - start, 1);
-      const raw = (start - rect.top) / range;
-      const progress = THREE.MathUtils.clamp(raw, 0, 1);
+
+      // Enter phase: start animating as section enters from below (immersive)
+      const enterStart = viewport * 0.85;
+      const enterEnd = viewport * 0.15;
+      const progress = THREE.MathUtils.clamp(
+        (enterStart - rect.top) / (enterStart - enterEnd),
+        0,
+        1
+      );
       scrollProgressRef.current = progress;
 
-      const shouldReveal = progress > 0.5;
+      // Exit phase: fade out after section scrolls past the top
+      const exitProgress = THREE.MathUtils.clamp(-rect.top / (viewport * 0.65), 0, 1);
+      if (canvasWrapperRef.current) {
+        canvasWrapperRef.current.style.opacity = 1 - exitProgress;
+      }
+
+      const shouldReveal = progress > 0.5 && exitProgress < 0.3;
       setHeadingRevealed((prev) => (prev === shouldReveal ? prev : shouldReveal));
     };
 
@@ -93,7 +104,7 @@ function CpuReveal() {
             <h2>Recent builds lighting up CET</h2>
           </div>
 
-          <div className="cpu-flight__canvas">
+          <div className="cpu-flight__canvas" ref={canvasWrapperRef}>
             <Canvas
               camera={{ position: [0.45, 0.38, 1.9], fov: 52, near: 0.1, far: 70 }}
               gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
