@@ -15,32 +15,41 @@ function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // Animate wording
-            animate('.recent-builds-word', {
-              translateY: [60, 0],
+            animate('.recent-builds-copy', {
+              translateY: [40, 0],
               opacity: [0, 1],
-              rotateX: [-30, 0],
-              scale: [0.8, 1],
-              easing: 'easeOutElastic(1, .6)',
-              duration: 1800,
-              delay: stagger(150),
-            });
-
-            // Animate background HUD
-            animate('.builds-orbit', {
-              opacity: [0, 1],
-              scale: [0.2, 1],
-              rotateZ: (el, i) => [i % 2 === 0 ? -90 : 90, 0],
-              easing: 'easeOutElastic(1, .8)',
-              duration: 2500,
-              delay: stagger(200, { start: 300 }),
-            });
-
-            animate('.builds-grid-dots', {
-              opacity: [0, 0.4],
-              scale: [0.8, 1],
-              duration: 2000,
-              delay: 800,
               easing: 'easeOutQuad',
+              duration: 1200,
+            });
+
+            // Animate background HUD (Oscilloscope)
+            animate('.oscilloscope', {
+              opacity: [0, 1],
+              scale: [0.8, 1],
+              easing: 'easeOutElastic(1, .8)',
+              duration: 2000,
+            });
+
+            animate('.scope-value', {
+              opacity: [0.6, 1, 0.6],
+              duration: 1500,
+              delay: stagger(250),
+              loop: true,
+              easing: 'linear'
+            });
+
+            animate('.scope-scanline', {
+              left: ['-5%', '105%'],
+              duration: 2500,
+              easing: 'linear',
+              loop: true
+            });
+
+            animate('.scope-wave-path--bg', {
+              strokeDashoffset: [0, 100],
+              duration: 1000,
+              easing: 'linear',
+              loop: true
             });
 
             observer.unobserve(entry.target);
@@ -148,23 +157,46 @@ function Home() {
           </div>
 
           <div className="recent-builds-container">
-            <div className="builds-orbital-hud" aria-hidden="true">
-              <div className="builds-orbit builds-orbit-1" />
-              <div className="builds-orbit builds-orbit-2" />
-              <div className="builds-orbit builds-orbit-3" />
-              <div className="builds-grid-dots" />
+            <div className="recent-builds-copy" ref={headingRef}>
+              <p className="recent-builds__kicker">Recent Builds Lighting up CET</p>
+              <h2 className="recent-builds-title">
+                Recent<br />
+                Builds<br />
+                Lighting up<br />
+                CET
+              </h2>
+              <p className="recent-builds__desc">
+                Discover the amazing events and initiatives crafted by our passionate members.
+                We bridge the gap between theoretical knowledge and practical engineering.
+              </p>
             </div>
 
-            <div className="recent-builds-heading" ref={headingRef}>
-              <h2>
-                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>RECENT</div>
-                <br />
-                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>BUILDS</div>
-                <br />
-                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>LIGHTING UP</div>
-                <br />
-                <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>CET</div>
-              </h2>
+            <div className="recent-builds-view">
+              <div className="oscilloscope" aria-hidden="true">
+                <div className="scope-screen">
+                  <div className="scope-grid" />
+                  <div className="scope-axes" />
+                  
+                  {/* Background high frequency wave */}
+                  <svg className="scope-wave-svg scope-wave-svg--bg" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                    <path className="scope-wave-path scope-wave-path--bg" d="M0 250 Q 62.5 150, 125 250 T 250 250 T 375 250 T 500 250 T 625 250 T 750 250 T 875 250 T 1000 250" />
+                  </svg>
+
+                  {/* Foreground larger smooth wave */}
+                  <svg className="scope-wave-svg scope-wave-svg--main" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                    <path className="scope-wave-path scope-wave-path--main" d="M 0 250 C 80 50, 170 50, 250 250 C 330 450, 420 450, 500 250 C 580 50, 670 50, 750 250 C 830 450, 920 450, 1000 250" />
+                  </svg>
+
+                  <div className="scope-scanline" />
+                  <div className="scope-glow-overlay" />
+                  
+                  <div className="scope-readings">
+                    <div className="scope-reading">CH1 <span className="scope-value">5.00V</span></div>
+                    <div className="scope-reading">M <span className="scope-value">2.00ms</span></div>
+                    <div className="scope-reading">TRIG <span className="scope-value" style={{color: '#a78bfa'}}>AUTO</span></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
