@@ -58,7 +58,7 @@
   margin: 0;
   font-size: clamp(2rem, 4vw, 4.1rem);
   line-height: 1.02;
-  color: rgba(245, 247, 250, 0.97);
+  color: #a046b4;
   font-family: 'Technor', sans-serif;
 }
 
@@ -367,106 +367,6 @@
   transform: translate(-50%, -50%);
 }
 
-.lens-handoff {
-  position: absolute;
-  left: 60%;
-  top: 86%;
-  width: min(64vw, 860px);
-  height: 46vh;
-  opacity: var(--scene-handoff);
-  transform: translate(-50%, calc((1 - var(--scene-handoff)) * 84px)) rotate(-24deg);
-  pointer-events: none;
-  z-index: 3;
-}
-
-.lens-handoff__rails,
-.lens-handoff__model {
-  position: absolute;
-  inset: 0;
-}
-
-.lens-handoff__rail {
-  position: absolute;
-  height: 1px;
-  background: rgba(148, 163, 184, 0.34);
-}
-
-.lens-handoff__rail--a { top: 16%; left: 54%; width: 44%; }
-.lens-handoff__rail--b { top: 30%; left: 46%; width: 52%; }
-.lens-handoff__rail--c { top: 44%; left: 41%; width: 57%; }
-.lens-handoff__rail--d { top: 58%; left: 36%; width: 62%; }
-
-.lens-handoff__model {
-  left: 8%;
-  top: 8%;
-  width: 52%;
-  height: 84%;
-}
-
-.lens-handoff__ring,
-.lens-handoff__core,
-.lens-handoff__base {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 1px solid rgba(148, 163, 184, 0.52);
-  background: rgba(10, 12, 16, 0.18);
-}
-
-.lens-handoff__ring {
-  border-radius: 999px;
-}
-
-.lens-handoff__ring--top {
-  top: 4%;
-  width: 70%;
-  height: 14%;
-}
-
-.lens-handoff__ring--mid {
-  top: 36%;
-  width: 64%;
-  height: 16%;
-}
-
-.lens-handoff__ring--low {
-  top: 64%;
-  width: 68%;
-  height: 14%;
-}
-
-.lens-handoff__core {
-  top: 22%;
-  width: 44%;
-  height: 46%;
-  border-radius: 0.9rem;
-}
-
-.lens-handoff__fins {
-  position: absolute;
-  top: 24%;
-  left: 50%;
-  width: 42%;
-  height: 40%;
-  transform: translateX(-50%);
-  display: grid;
-  grid-template-rows: repeat(18, minmax(0, 1fr));
-  gap: 3px;
-}
-
-.lens-handoff__fin {
-  border: 1px solid rgba(120, 132, 156, 0.44);
-  border-radius: 999px;
-  background: rgba(16, 18, 24, 0.2);
-}
-
-.lens-handoff__base {
-  top: 80%;
-  width: 74%;
-  height: 14%;
-  border-radius: 50%;
-}
-
 @media (max-width: 1100px) {
   .lens-scroll {
     min-height: 435vh;
@@ -483,10 +383,6 @@
     width: min(80vmin, 760px);
   }
 
-  .lens-handoff {
-    left: 56%;
-    width: min(72vw, 760px);
-  }
 }
 
 @media (max-width: 768px) {
@@ -517,27 +413,6 @@
     left: 50%;
     top: 64%;
     width: min(95vw, 560px);
-  }
-
-  .lens-handoff {
-    left: 50%;
-    top: 92%;
-    width: 94vw;
-    height: 36vh;
-    transform: translate(-50%, calc((1 - var(--scene-handoff)) * 84px)) rotate(-18deg);
-  }
-
-  .lens-handoff__model {
-    left: 2%;
-    width: 60%;
-  }
-
-  .lens-handoff__rail--a,
-  .lens-handoff__rail--b,
-  .lens-handoff__rail--c,
-  .lens-handoff__rail--d {
-    left: 52%;
-    width: 45%;
   }
 
   .lens-hud__tick {

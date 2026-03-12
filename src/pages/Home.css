@@ -309,29 +309,116 @@
 }
 
 .power-hub__model-slot {
-  min-height: 220px;
+  min-height: 420px;
   position: relative;
-  opacity: 0.55;
+  opacity: 0.78;
+  overflow: visible;
 }
 
 .power-hub__rail {
   position: absolute;
-  left: 0;
-  right: 0;
+  right: -8%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(148, 163, 184, 0), rgba(148, 163, 184, 0.42), rgba(148, 163, 184, 0));
+  background: rgba(148, 163, 184, 0.42);
 }
 
 .power-hub__rail--a {
-  top: 24%;
+  top: 20%;
+  left: 42%;
 }
 
 .power-hub__rail--b {
-  top: 50%;
+  top: 38%;
+  left: 34%;
 }
 
 .power-hub__rail--c {
-  top: 76%;
+  top: 56%;
+  left: 28%;
+}
+
+.power-hub__rail--d {
+  top: 74%;
+  left: 20%;
+}
+
+.reference-lens {
+  position: absolute;
+  left: 6%;
+  top: 8%;
+  width: 54%;
+  height: 84%;
+  transform: rotate(-22deg);
+}
+
+.reference-lens__ring,
+.reference-lens__core,
+.reference-lens__base {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid rgba(148, 163, 184, 0.54);
+  background: transparent;
+}
+
+.reference-lens__ring {
+  border-radius: 999px;
+}
+
+.reference-lens__ring--top {
+  top: 3%;
+  width: 76%;
+  height: 12%;
+}
+
+.reference-lens__ring--mid-a {
+  top: 28%;
+  width: 64%;
+  height: 15%;
+}
+
+.reference-lens__ring--mid-b {
+  top: 50%;
+  width: 68%;
+  height: 14%;
+}
+
+.reference-lens__ring--low {
+  top: 70%;
+  width: 62%;
+  height: 13%;
+}
+
+.reference-lens__core {
+  top: 17%;
+  width: 48%;
+  height: 50%;
+  border-radius: 0.7rem;
+}
+
+.reference-lens__fins {
+  position: absolute;
+  top: 19%;
+  left: 50%;
+  width: 46%;
+  height: 45%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-rows: repeat(24, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.reference-lens__fin {
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  border-radius: 999px;
+  background: transparent;
+}
+
+.reference-lens__base {
+  top: 84%;
+  width: 78%;
+  height: 13%;
+  border-radius: 50%;
 }
 
 .section-badge {
@@ -461,7 +548,24 @@
   }
 
   .power-hub__model-slot {
-    min-height: 84px;
+    min-height: 230px;
+  }
+
+  .reference-lens {
+    left: 15%;
+    width: 42%;
+    top: 14%;
+  }
+
+  .power-hub__rail {
+    right: -2%;
+  }
+
+  .power-hub__rail--a,
+  .power-hub__rail--b,
+  .power-hub__rail--c,
+  .power-hub__rail--d {
+    left: 42%;
   }
 
   .stat-card {

@@ -35,9 +35,23 @@ function Home() {
               </p>
             </motion.div>
             <div className="power-hub__model-slot" aria-hidden="true">
+              <div className="reference-lens">
+                <span className="reference-lens__ring reference-lens__ring--top" />
+                <span className="reference-lens__ring reference-lens__ring--mid-a" />
+                <span className="reference-lens__ring reference-lens__ring--mid-b" />
+                <span className="reference-lens__ring reference-lens__ring--low" />
+                <span className="reference-lens__core" />
+                <span className="reference-lens__base" />
+                <div className="reference-lens__fins">
+                  {Array.from({ length: 24 }).map((_, idx) => (
+                    <span key={`ref-fin-${idx}`} className="reference-lens__fin" />
+                  ))}
+                </div>
+              </div>
               <span className="power-hub__rail power-hub__rail--a" />
               <span className="power-hub__rail power-hub__rail--b" />
               <span className="power-hub__rail power-hub__rail--c" />
+              <span className="power-hub__rail power-hub__rail--d" />
             </div>
           </div>
 
