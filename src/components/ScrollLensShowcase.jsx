@@ -1,9 +1,27 @@
 import { useEffect, useRef } from 'react';
-import { animate, random, remove, stagger } from 'animejs';
+import { animate, remove, stagger } from 'animejs';
 import './ScrollLensShowcase.css';
 
 const clamp01 = (value) => Math.max(0, Math.min(1, value));
 const segment = (value, start, end) => clamp01((value - start) / (end - start));
+
+const explodedParts = [
+  { x: 0, y: -290, w: 62, h: 12, shape: 'ring' },
+  { x: 0, y: -238, w: 54, h: 14, shape: 'ring' },
+  { x: 0, y: -186, w: 48, h: 18, shape: 'module' },
+  { x: -28, y: -138, w: 22, h: 18, shape: 'cap' },
+  { x: 28, y: -138, w: 22, h: 18, shape: 'cap' },
+  { x: 0, y: -110, w: 52, h: 18, shape: 'module' },
+  { x: 0, y: -58, w: 58, h: 20, shape: 'module' },
+  { x: 0, y: -6, w: 44, h: 24, shape: 'tube' },
+  { x: -34, y: 38, w: 20, h: 18, shape: 'cap' },
+  { x: 34, y: 38, w: 20, h: 18, shape: 'cap' },
+  { x: 0, y: 62, w: 54, h: 18, shape: 'module' },
+  { x: 0, y: 112, w: 62, h: 16, shape: 'ring' },
+  { x: 0, y: 166, w: 50, h: 18, shape: 'module' },
+  { x: 0, y: 220, w: 58, h: 14, shape: 'ring' },
+  { x: 0, y: 276, w: 70, h: 20, shape: 'ring' },
+];
 
 function ScrollLensShowcase() {
   const sectionRef = useRef(null);
@@ -20,17 +38,17 @@ function ScrollLensShowcase() {
       const travel = Math.max(rect.height - viewport, 1);
       const progress = clamp01(-rect.top / travel);
 
-      const hud = 1 - segment(progress, 0.22, 0.36);
-      const assembled = segment(progress, 0.16, 0.32) * (1 - segment(progress, 0.58, 0.72));
-      const exploded = segment(progress, 0.56, 0.82);
-      const outro = segment(progress, 0.84, 1);
-      const spin = progress * 220;
+      const hud = 1 - segment(progress, 0.2, 0.35);
+      const assembled = segment(progress, 0.15, 0.32) * (1 - segment(progress, 0.58, 0.74));
+      const exploded = segment(progress, 0.55, 0.84);
+      const glow = segment(progress, 0.06, 0.22) * (1 - segment(progress, 0.84, 1));
+      const spin = progress * 210;
 
       stage.style.setProperty('--show-progress', progress.toFixed(4));
       stage.style.setProperty('--scene-hud', hud.toFixed(4));
       stage.style.setProperty('--scene-assembled', assembled.toFixed(4));
       stage.style.setProperty('--scene-exploded', exploded.toFixed(4));
-      stage.style.setProperty('--scene-outro', outro.toFixed(4));
+      stage.style.setProperty('--scene-glow', glow.toFixed(4));
       stage.style.setProperty('--scroll-spin', `${spin.toFixed(2)}deg`);
     };
 
@@ -53,109 +71,83 @@ function ScrollLensShowcase() {
     const hudBands = stage.querySelectorAll('.lens-hud__band');
     const hudScan = stage.querySelector('.lens-hud__scan');
     const assemblyRings = stage.querySelectorAll('.lens-assembly__ring');
-    const assemblyCoils = stage.querySelectorAll('.lens-assembly__coil');
-    const explodedParts = stage.querySelectorAll('.lens-explode__part');
-    const labels = stage.querySelectorAll('.lens-copy__line');
+    const assemblyRibs = stage.querySelectorAll('.lens-assembly__rib');
+    const exploded = stage.querySelectorAll('.lens-explode__part');
 
     const animations = [
       animate(hudTicks, {
-        opacity: [0.18, 0.7, 0.22],
-        scaleY: [0.9, 1.2, 1],
+        opacity: [0.22, 0.78, 0.22],
+        scaleY: [0.85, 1.2, 1],
         easing: 'inOutSine',
-        delay: stagger(14),
+        delay: stagger(10),
         duration: 1200,
         loop: true,
       }),
       animate(hudDots, {
-        translateY: [10, -12],
-        translateX: () => random(-5, 5),
+        translateY: [8, -10],
         opacity: [0, 1, 0],
-        scale: [0.8, 1.25, 0.7],
+        scale: [0.8, 1.2, 0.75],
         easing: 'outSine',
-        delay: stagger(120, { from: 'center' }),
+        delay: stagger(100, { from: 'center' }),
         duration: 1400,
         loop: true,
       }),
       animate(hudBands, {
         rotate: (el, idx) => (idx % 2 === 0 ? [0, 8, 0] : [0, -10, 0]),
-        opacity: [0.3, 0.9, 0.3],
+        opacity: [0.3, 0.88, 0.3],
         easing: 'inOutQuad',
         delay: stagger(180),
-        duration: 2600,
+        duration: 2400,
         loop: true,
       }),
       animate(hudScan, {
         translateX: ['-120%', '130%'],
         easing: 'inOutQuart',
-        duration: 2000,
+        duration: 1900,
         loop: true,
       }),
       animate(assemblyRings, {
         rotate: (el, idx) => (idx % 2 === 0 ? [0, 360] : [0, -360]),
         easing: 'linear',
-        duration: 9000,
+        duration: 9200,
         loop: true,
       }),
-      animate(assemblyCoils, {
-        translateY: [0, -8, 0],
-        scale: [1, 1.04, 1],
+      animate(assemblyRibs, {
+        translateY: [0, -6, 0],
+        opacity: [0.6, 0.96, 0.62],
         easing: 'inOutSine',
-        delay: stagger(140),
-        duration: 2200,
+        delay: stagger(38),
+        duration: 1300,
         loop: true,
       }),
-      animate(explodedParts, {
-        translateY: () => random(-16, 16),
-        translateX: () => random(-18, 18),
-        rotate: () => random(-6, 6),
+      animate(exploded, {
+        translateY: (el, idx) => [0, idx % 2 === 0 ? -9 : 9, 0],
+        translateX: (el, idx) => [0, ((idx % 3) - 1) * 6, 0],
+        rotate: (el, idx) => [0, idx % 2 === 0 ? -2 : 2, 0],
         easing: 'inOutSine',
+        delay: stagger(55),
         duration: 3400,
-        direction: 'alternate',
-        loop: true,
-      }),
-      animate(labels, {
-        opacity: [0.2, 1, 0.4],
-        translateX: [0, 8, 0],
-        easing: 'inOutSine',
-        delay: stagger(160),
-        duration: 1700,
         loop: true,
       }),
     ];
 
     return () => {
       animations.forEach((instance) => instance.pause());
-      remove([
-        hudTicks,
-        hudDots,
-        hudBands,
-        hudScan,
-        assemblyRings,
-        assemblyCoils,
-        explodedParts,
-        labels,
-      ]);
+      remove([hudTicks, hudDots, hudBands, hudScan, assemblyRings, assemblyRibs, exploded]);
     };
   }, []);
 
   return (
-    <section ref={sectionRef} className="lens-scroll" aria-label="Engineering animation showcase">
+    <section ref={sectionRef} className="lens-scroll" aria-label="IET animation showcase">
       <div className="lens-scroll__sticky">
         <div className="lens-scroll__stage" ref={stageRef}>
           <header className="lens-copy">
-            <p className="lens-copy__kicker">Engineering Motion Stack</p>
-            <h2>Scroll through a live modular animation pipeline</h2>
+            <p className="lens-copy__kicker">Our Foundation</p>
+            <h2>Powering Innovation Since 2008</h2>
             <p className="lens-copy__desc">
-              Original Anime.js-powered sequence with layered HUD telemetry, assembled optics,
-              and exploded module choreography.
+              As the first IET chapter in Kerala, inaugurated on November 14, 2008,
+              we continue building immersive engineering experiences through bold execution.
             </p>
-            <div className="lens-copy__rails" aria-hidden="true">
-              <span className="lens-copy__line">waapi</span>
-              <span className="lens-copy__line">timeline</span>
-              <span className="lens-copy__line">stagger</span>
-              <span className="lens-copy__line">svg</span>
-              <span className="lens-copy__line">animation</span>
-            </div>
           </header>
 
           <div className="lens-view">
@@ -171,20 +163,20 @@ function ScrollLensShowcase() {
               <div className="lens-hud__wave" />
               <div className="lens-hud__scan" />
               <div className="lens-hud__ticks">
-                {Array.from({ length: 96 }).map((_, idx) => (
+                {Array.from({ length: 104 }).map((_, idx) => (
                   <span
                     key={`tick-${idx}`}
                     className="lens-hud__tick"
-                    style={{ '--angle': `${(idx / 96) * 360}deg` }}
+                    style={{ '--angle': `${(idx / 104) * 360}deg` }}
                   />
                 ))}
               </div>
               <div className="lens-hud__dots">
-                {Array.from({ length: 24 }).map((_, idx) => (
+                {Array.from({ length: 26 }).map((_, idx) => (
                   <span
                     key={`dot-${idx}`}
                     className="lens-hud__dot"
-                    style={{ '--angle': `${(idx / 24) * 360}deg` }}
+                    style={{ '--angle': `${(idx / 26) * 360}deg` }}
                   />
                 ))}
               </div>
@@ -194,17 +186,29 @@ function ScrollLensShowcase() {
               <span className="lens-assembly__ring lens-assembly__ring--a" />
               <span className="lens-assembly__ring lens-assembly__ring--b" />
               <span className="lens-assembly__ring lens-assembly__ring--c" />
-              <span className="lens-assembly__coil lens-assembly__coil--1" />
-              <span className="lens-assembly__coil lens-assembly__coil--2" />
-              <span className="lens-assembly__coil lens-assembly__coil--3" />
-              <span className="lens-assembly__body" />
+              <span className="lens-assembly__shell" />
+              <span className="lens-assembly__core" />
               <span className="lens-assembly__front" />
               <span className="lens-assembly__rear" />
+              <div className="lens-assembly__ribs">
+                {Array.from({ length: 22 }).map((_, idx) => (
+                  <span key={`rib-${idx}`} className="lens-assembly__rib" />
+                ))}
+              </div>
             </div>
 
             <div className="lens-explode" aria-hidden="true">
-              {Array.from({ length: 11 }).map((_, idx) => (
-                <span key={`part-${idx}`} className={`lens-explode__part lens-explode__part--${idx + 1}`} />
+              {explodedParts.map((part, idx) => (
+                <span
+                  key={`part-${idx}`}
+                  className={`lens-explode__part lens-explode__part--${part.shape}`}
+                  style={{
+                    '--x': part.x,
+                    '--y': part.y,
+                    '--w': `${part.w}%`,
+                    '--h': `${part.h}%`,
+                  }}
+                />
               ))}
             </div>
           </div>
