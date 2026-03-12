@@ -1,10 +1,43 @@
+import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { animate, stagger } from 'animejs';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import DroneHero from '../components/DroneHero';
 import ScrollLensShowcase from '../components/ScrollLensShowcase';
 import './Home.css';
 
 function Home() {
+  const headingRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            anime({
+              targets: '.recent-builds-word',
+              translateY: [60, 0],
+              opacity: [0, 1],
+              rotateX: [-30, 0],
+              scale: [0.8, 1],
+              easing: 'easeOutElastic(1, .6)',
+              duration: 1800,
+              delay: anime.stagger(150),
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    if (headingRef.current) {
+      observer.observe(headingRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="home">
       <DroneHero />
@@ -95,23 +128,17 @@ function Home() {
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="recent-builds-heading"
-          >
+          <div className="recent-builds-heading" ref={headingRef}>
             <h2>
-              RECENT
+              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>RECENT</div>
               <br />
-              BUILDS
+              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>BUILDS</div>
               <br />
-              LICHTINC UP
+              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>LIGHTING UP</div>
               <br />
-              CET
+              <div className="recent-builds-word" style={{ display: 'inline-block', opacity: 0 }}>CET</div>
             </h2>
-          </motion.div>
+          </div>
         </div>
       </section>
 
