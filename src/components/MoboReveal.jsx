@@ -1,66 +1,13 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Center, Environment, useGLTF } from '@react-three/drei';
-import * as THREE from 'three';
+import { useEffect, useRef, useState } from 'react';
+import { animate, remove, stagger } from 'animejs';
 import './MoboReveal.css';
 
-useGLTF.preload('/models/mobo.glb');
-
-function MoboModel({ scrollProgressRef }) {
-  const { scene } = useGLTF('/models/mobo.glb');
-  const tiltRef = useRef(null);
-  const chassisRef = useRef(null);
-  const liftRef = useRef(null);
-
-  const normalizedScale = useMemo(() => {
-    const box = new THREE.Box3().setFromObject(scene);
-    const size = box.getSize(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    return 2.0 / maxDim;
-  }, [scene]);
-
-  useFrame((state, delta) => {
-    const progress = scrollProgressRef.current;
-    const eased = 1 - Math.pow(1 - progress, 2);
-    const t = state.clock.getElapsedTime();
-
-    if (tiltRef.current) {
-      // Start tilted to show the board face, flatten slightly as we scroll
-      const targetTiltX = THREE.MathUtils.lerp(0.55, 0.18, eased);
-      const targetTiltZ = THREE.MathUtils.lerp(0.18, -0.06, eased);
-      const lerpFactor = Math.min(delta * 3, 1);
-      tiltRef.current.rotation.x += (targetTiltX - tiltRef.current.rotation.x) * lerpFactor;
-      tiltRef.current.rotation.z += (targetTiltZ - tiltRef.current.rotation.z) * lerpFactor;
-    }
-
-    if (chassisRef.current) {
-      chassisRef.current.rotation.y += delta * (0.15 + eased * 0.12);
-      chassisRef.current.rotation.x = Math.sin(t * 0.19) * 0.05;
-      chassisRef.current.rotation.z = Math.sin(t * 0.27) * 0.035;
-    }
-
-    if (liftRef.current) {
-      liftRef.current.position.y = Math.sin(t * 0.85) * 0.07 + THREE.MathUtils.lerp(-0.1, 0.06, eased);
-    }
-  });
-
-  return (
-    <group ref={tiltRef}>
-      <group ref={chassisRef} scale={normalizedScale}>
-        <group ref={liftRef}>
-          <Center>
-            <primitive object={scene} dispose={null} />
-          </Center>
-        </group>
-      </group>
-    </group>
-  );
-}
+const clamp01 = (value) => Math.max(0, Math.min(1, value));
 
 function MoboReveal() {
   const sectionRef = useRef(null);
-  const canvasWrapperRef = useRef(null);
-  const scrollProgressRef = useRef(0);
+  const animationWrapperRef = useRef(null);
+  const sceneRef = useRef(null);
   const [headingRevealed, setHeadingRevealed] = useState(false);
 
   useEffect(() => {
@@ -73,16 +20,19 @@ function MoboReveal() {
 
       const enterStart = viewport * 0.85;
       const enterEnd = viewport * 0.15;
-      const progress = THREE.MathUtils.clamp(
+      const progress = clamp01(
         (enterStart - rect.top) / (enterStart - enterEnd),
-        0,
-        1
       );
-      scrollProgressRef.current = progress;
 
-      const exitProgress = THREE.MathUtils.clamp(-rect.top / (viewport * 0.65), 0, 1);
-      if (canvasWrapperRef.current) {
-        canvasWrapperRef.current.style.opacity = 1 - exitProgress;
+      const exitProgress = clamp01(-rect.top / (viewport * 0.65));
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      if (animationWrapperRef.current) {
+        animationWrapperRef.current.style.opacity = 1 - exitProgress;
+      }
+      if (sceneRef.current) {
+        sceneRef.current.style.setProperty('--mobo-progress', eased.toFixed(4));
+        sceneRef.current.style.setProperty('--mobo-enter', progress.toFixed(4));
       }
 
       const shouldReveal = progress > 0.5 && exitProgress < 0.3;
@@ -94,6 +44,75 @@ function MoboReveal() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const root = sceneRef.current;
+    if (!root) return undefined;
+
+    const board = root.querySelector('.mobo-anim__board');
+    const glow = root.querySelector('.mobo-anim__board-glow');
+    const buses = root.querySelectorAll('.mobo-anim__bus');
+    const nodes = root.querySelectorAll('.mobo-anim__node');
+    const chips = root.querySelectorAll('.mobo-anim__chip');
+    const packets = root.querySelectorAll('.mobo-anim__packet');
+
+    const animations = [
+      animate(board, {
+        rotate: [0, -2, 3, -1, 0],
+        translateY: [0, -8, 4, -2, 0],
+        scale: [1, 1.02, 0.998, 1],
+        easing: 'easeInOutSine',
+        duration: 5200,
+        loop: true,
+      }),
+      animate(glow, {
+        opacity: [0.2, 0.52, 0.25],
+        scale: [0.92, 1.16],
+        easing: 'easeInOutQuad',
+        duration: 2800,
+        direction: 'alternate',
+        loop: true,
+      }),
+      animate(buses, {
+        opacity: [0.25, 0.86],
+        scaleX: [0.82, 1.12],
+        easing: 'easeInOutSine',
+        delay: stagger(90),
+        duration: 1700,
+        direction: 'alternate',
+        loop: true,
+      }),
+      animate(nodes, {
+        scale: [0.78, 1.28, 0.86],
+        opacity: [0.45, 1, 0.5],
+        easing: 'easeInOutSine',
+        delay: stagger(70, { grid: [6, 4], from: 'center' }),
+        duration: 1500,
+        loop: true,
+      }),
+      animate(chips, {
+        translateY: [0, -5, 0],
+        rotate: [0, 2, -2, 0],
+        easing: 'easeInOutQuad',
+        delay: stagger(140),
+        duration: 1900,
+        loop: true,
+      }),
+      animate(packets, {
+        translateX: ['-12%', '112%'],
+        opacity: [0, 1, 0],
+        easing: 'linear',
+        delay: stagger(240),
+        duration: 1800,
+        loop: true,
+      }),
+    ];
+
+    return () => {
+      animations.forEach((instance) => instance.pause());
+      remove([board, glow, buses, nodes, chips, packets]);
+    };
+  }, []);
+
   return (
     <section id="powering-innovation" ref={sectionRef} className="mobo-flight">
       <div className="mobo-flight__sticky">
@@ -103,25 +122,37 @@ function MoboReveal() {
             <h2>Powering Innovation Since 2008</h2>
           </div>
 
-          <div className="mobo-flight__canvas" ref={canvasWrapperRef}>
-            <Canvas
-              camera={{ position: [0.45, 0.55, 2.1], fov: 52, near: 0.1, far: 70 }}
-              gl={{ antialias: true, powerPreference: 'high-performance', alpha: true }}
-              style={{ background: 'transparent' }}
-              dpr={[1, 2]}
-              aria-hidden="true"
-            >
-              <ambientLight intensity={0.25} />
-              <hemisphereLight intensity={0.35} groundColor="#020617" color="#dbeafe" />
-              <directionalLight position={[3.2, 3.6, 1.4]} intensity={1.8} color="#c084fc" />
-              <directionalLight position={[-2.6, -3.2, -1.8]} intensity={0.85} color="#38bdf8" />
-              <pointLight position={[0, 1.4, 0]} intensity={0.8} color="#f472b6" />
+          <div className="mobo-flight__canvas" ref={animationWrapperRef}>
+            <div className="mobo-anim" ref={sceneRef} aria-hidden="true">
+              <div className="mobo-anim__bg" />
+              <div className="mobo-anim__board-glow" />
 
-              <Suspense fallback={null}>
-                <MoboModel scrollProgressRef={scrollProgressRef} />
-                <Environment preset="studio" />
-              </Suspense>
-            </Canvas>
+              <div className="mobo-anim__board">
+                <div className="mobo-anim__buses">
+                  {Array.from({ length: 14 }).map((_, idx) => (
+                    <span key={`bus-${idx}`} className="mobo-anim__bus" />
+                  ))}
+                </div>
+
+                <div className="mobo-anim__nodes">
+                  {Array.from({ length: 24 }).map((_, idx) => (
+                    <span key={`node-${idx}`} className="mobo-anim__node" />
+                  ))}
+                </div>
+
+                <div className="mobo-anim__chips">
+                  {Array.from({ length: 6 }).map((_, idx) => (
+                    <span key={`chip-${idx}`} className="mobo-anim__chip" />
+                  ))}
+                </div>
+
+                <div className="mobo-anim__packets">
+                  {Array.from({ length: 9 }).map((_, idx) => (
+                    <span key={`packet-${idx}`} className="mobo-anim__packet" />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

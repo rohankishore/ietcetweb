@@ -1,30 +1,98 @@
+import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { animate, stagger } from 'animejs';
 import SpotlightCard from '../../Reactbits/SpotlightCard/SpotlightCard';
 import DroneHero from '../components/DroneHero';
-import MoboReveal from '../components/MoboReveal';
-import CpuReveal from '../components/CpuReveal';
+import ScrollLensShowcase from '../components/ScrollLensShowcase';
 import './Home.css';
 
 function Home() {
+  const headingRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate wording
+            animate('.recent-builds-copy', {
+              translateY: [40, 0],
+              opacity: [0, 1],
+              easing: 'easeOutQuad',
+              duration: 1200,
+            });
+
+            // Animate background HUD (Oscilloscope)
+            animate('.oscilloscope', {
+              opacity: [0, 1],
+              scale: [0.8, 1],
+              easing: 'easeOutElastic(1, .8)',
+              duration: 2000,
+            });
+
+            animate('.scope-value', {
+              opacity: [0.6, 1, 0.6],
+              duration: 1500,
+              delay: stagger(250),
+              loop: true,
+              easing: 'linear'
+            });
+
+            animate('.scope-scanline', {
+              left: ['-5%', '105%'],
+              duration: 2500,
+              easing: 'linear',
+              loop: true
+            });
+
+            animate('.scope-wave-path--bg', {
+              strokeDashoffset: [0, 100],
+              duration: 1000,
+              easing: 'linear',
+              loop: true
+            });
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    if (headingRef.current) {
+      observer.observe(headingRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="home">
       <DroneHero />
-      <MoboReveal />
+      <div className="signal-splitter" aria-hidden="true">
+        <div className="signal-splitter__line" />
+        <div className="signal-splitter__scope">
+          <svg className="signal-splitter__sine" viewBox="0 0 1200 40" preserveAspectRatio="none">
+            <path d="M0 20 C 30 10, 60 10, 90 20 S 150 30, 180 20 S 240 10, 270 20 S 330 30, 360 20 S 420 10, 450 20 S 510 30, 540 20 S 600 10, 630 20 S 690 30, 720 20 S 780 10, 810 20 S 870 30, 900 20 S 960 10, 990 20 S 1050 30, 1080 20 S 1140 10, 1170 20 S 1230 30, 1260 20" />
+          </svg>
+          <span className="signal-splitter__pulse" />
+        </div>
+      </div>
+      <ScrollLensShowcase />
       <section id="about" className="power-hub">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="section-intro"
-          >
-            <span className="section-badge">Our Foundation</span>
-            <p className="section-subtitle">
-              As the first IET chapter in Kerala, inaugurated on November 14, 2008, 
-              we've been at the forefront of engineering education and innovation.
-            </p>
-          </motion.div>
+          <div className="power-hub__header">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="section-intro section-intro--side"
+            >
+             
+            </motion.div>
+
+          </div>
 
           <div className="stats-grid">
             <motion.div
@@ -87,42 +155,89 @@ function Home() {
               </SpotlightCard>
             </motion.div>
           </div>
+
+          <div className="recent-builds-container">
+            <div className="recent-builds-copy" ref={headingRef}>
+              <p className="recent-builds__kicker">Recent events</p>
+              <h2 className="recent-builds-title">
+                Recent<br />
+                Builds<br />
+                Lighting up<br />
+                CET
+              </h2>
+              <p className="recent-builds__desc">
+                A snapshot of the flagship experiments our squads are polishing for demo days, competitions, and community deployment.
+                
+                We bridge the gap between theoretical knowledge and practical engineering.
+              </p>
+            </div>
+
+            <div className="recent-builds-view">
+              <div className="oscilloscope" aria-hidden="true">
+                <div className="scope-screen">
+                  <div className="scope-grid" />
+                  <div className="scope-axes" />
+                  
+                  {/* Background high frequency wave */}
+                  <svg className="scope-wave-svg scope-wave-svg--bg" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                    <path className="scope-wave-path scope-wave-path--bg" d="M0 250 Q 62.5 150, 125 250 T 250 250 T 375 250 T 500 250 T 625 250 T 750 250 T 875 250 T 1000 250" />
+                  </svg>
+
+                  {/* Foreground larger smooth wave */}
+                  <svg className="scope-wave-svg scope-wave-svg--main" viewBox="0 0 1000 500" preserveAspectRatio="none">
+                    <path className="scope-wave-path scope-wave-path--main" d="M 0 250 C 80 50, 170 50, 250 250 C 330 450, 420 450, 500 250 C 580 50, 670 50, 750 250 C 830 450, 920 450, 1000 250" />
+                  </svg>
+
+                  <div className="scope-scanline" />
+                  <div className="scope-glow-overlay" />
+                  
+                  <div className="scope-readings">
+                    <div className="scope-reading">CH1 <span className="scope-value">5.00V</span></div>
+                    <div className="scope-reading">M <span className="scope-value">2.00ms</span></div>
+                    <div className="scope-reading">TRIG <span className="scope-value" style={{color: '#a78bfa'}}>AUTO</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-
-      <CpuReveal />
 
       <section className="highlights">
         <div className="container">
           <div className="projects-grid">
-            <motion.article
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="project-card project-card--feature"
             >
-              <span className="project-card__badge">Flagship Initiative</span>
-              <h3 className="project-card__title">CODE reCET</h3>
-              <p className="project-card__description">
-                Our campus-wide coding league delivering adaptive missions, live leaderboards, 
-                and mentorship for every skill tier across the semester.
-              </p>
-              <div className="project-card__stats">
-                <div>
-                  <span>36</span>
-                  hours
+              <SpotlightCard 
+                className="project-card project-card--feature"
+                spotlightColor="rgba(167, 139, 250, 0.3)"
+              >
+                <span className="project-card__badge">Flagship Initiative</span>
+                <h3 className="project-card__title">CODE reCET</h3>
+                <p className="project-card__description">
+                  Our campus-wide coding league delivering adaptive missions, live leaderboards, 
+                  and mentorship for every skill tier across the semester.
+                </p>
+                <div className="project-card__stats">
+                  <div>
+                    <span>36</span>
+                    hours
+                  </div>
+                  <div>
+                    <span>100+</span>
+                    live participants
+                  </div>
+                  <div>
+                    <span>24/7</span>
+                    mentor support
+                  </div>
                 </div>
-                <div>
-                  <span>100+</span>
-                  live participants
-                </div>
-                <div>
-                  <span>24/7</span>
-                  mentor support
-                </div>
-              </div>
-            </motion.article>
+              </SpotlightCard>
+            </motion.div>
           </div>
         </div>
       </section>
